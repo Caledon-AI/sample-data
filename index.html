@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Model vs Expert Review</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/diff/dist/diff.min.js"></script>
+    <style>
+      /* Custom styles for the table */
+      .question-cell {
+        font-size: 1.25rem; /* Larger font size for questions */
+        font-weight: bold;
+      }
+      .markdown-cell {
+        font-size: 0.875rem; /* Smaller font size for markdown content */
+        white-space: pre-wrap; /* Preserve line breaks */
+        line-height: 1; /* Increase line height for better readability */
+      }
+      /* Ensure list styles are visible and properly aligned */
+      ul,
+      ol {
+        margin-left: 1.5rem;
+        list-style-type: disc; /* Ensure bullets are shown */
+        list-style-position: outside; /* Ensure bullets are outside the text */
+      }
+      /* Thicker and more visible row borders */
+      tr {
+        border-bottom: 3px solid #000; /* Thicker border */
+      }
+      /* Highlight differences */
+      .diff-added {
+        background-color: #d4fcbc; /* Light green for additions */
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 p-6">
+    <div class="container mx-auto">
+      <h1 class="text-2xl font-bold mb-4">Model Output vs Expert Review</h1>
+      <table class="min-w-full bg-white">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border-b-2 border-gray-300 text-left">
+              Question
+            </th>
+            <th class="py-2 px-4 border-b-2 border-gray-300 text-left">
+              Model Output
+            </th>
+            <th class="py-2 px-4 border-b-2 border-gray-300 text-left">
+              Expert Review
+            </th>
+          </tr>
+        </thead>
+        <tbody id="data-table">
+          <!-- Data will be inserted here by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      // Check if marked is available
+      console.log("Marked.js version:", marked.version);
+
+      // Fetch the JSON data and populate the table
+      fetch("9f3e205d-2259-4b66-8615-16f9fe4caf72.json")
+        .then((response) => response.json())
+        .then((data) => {
+          const tableBody = document.getElementById("data-table");
+          data.forEach((item) => {
+            const row = document.createElement("tr");
+            row.classList.add("bg-gray-50");
+
+            const questionCell = document.createElement("td");
+            questionCell.classList.add(
+              "py-2",
+              "px-4",
+              "border-b",
+              "border-gray-200",
+              "question-cell",
+              "align-top"
+            );
+            questionCell.textContent = item.Question;
+            row.appendChild(questionCell);
+
+            const modelOutputCell = document.createElement("td");
+            modelOutputCell.classList.add(
+              "py-2",
+              "px-4",
+              "border-b",
+              "border-gray-200",
+              "markdown-cell",
+              "align-top"
+            );
+            modelOutputCell.innerHTML = marked.parse(item.ModelOutput || "N/A"); // Convert markdown to HTML
+            row.appendChild(modelOutputCell);
+
+            const expertReviewCell = document.createElement("td");
+            expertReviewCell.classList.add(
+              "py-2",
+              "px-4",
+              "border-b",
+              "border-gray-200",
+              "markdown-cell",
+              "align-top"
+            );
+
+            // Calculate and highlight differences
+            const diff = Diff.diffWords(
+              item.ModelOutput || "",
+              item.ExpertReview || ""
+            );
+            const diffHtml = diff.map(part => {
+              if (part.added) {
+                return `<span class="diff-added">${part.value}</span>`;
+              }
+              return part.removed ? '' : part.value;
+            }).join('');
+
+            // Insert the diff into the expert review cell
+            expertReviewCell.innerHTML = marked.parse(diffHtml);
+            row.appendChild(expertReviewCell);
+
+            tableBody.appendChild(row);
+          });
+        })
+        .catch((error) => console.error("Error fetching JSON:", error));
+    </script>
+  </body>
+</html>
