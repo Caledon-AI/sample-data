@@ -19,7 +19,7 @@
       .markdown-cell {
         font-size: 0.875rem; /* Smaller font size for markdown content */
         white-space: pre-wrap; /* Preserve line breaks */
-        line-height: 1; /* Increase line height for better readability */
+        line-height: 1.5; /* Increase line height for better readability */
       }
       /* Ensure list styles are visible and properly aligned */
       ul,
@@ -30,7 +30,7 @@
       }
       /* Thicker and more visible row borders */
       tr {
-        border-bottom: 3px solid #000; /* Thicker border */
+        border-bottom: 2px solid #ccc; /* Thicker border */
       }
       /* Highlight differences */
       .diff-added {
@@ -62,72 +62,82 @@
     </div>
 
     <script>
-      // Check if marked is available
-      console.log("Marked.js version:", marked.version);
+      // Function to get query parameters
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
 
-      // Fetch the JSON data and populate the table
-      fetch("9f3e205d-2259-4b66-8615-16f9fe4caf72.json")
-        .then((response) => response.json())
-        .then((data) => {
-          const tableBody = document.getElementById("data-table");
-          data.forEach((item) => {
-            const row = document.createElement("tr");
-            row.classList.add("bg-gray-50");
+      // Get the sample file name from the query parameter
+      const sampleFileName = getQueryParam('sample');
 
-            const questionCell = document.createElement("td");
-            questionCell.classList.add(
-              "py-2",
-              "px-4",
-              "border-b",
-              "border-gray-200",
-              "question-cell",
-              "align-top"
-            );
-            questionCell.textContent = item.Question;
-            row.appendChild(questionCell);
+      if (sampleFileName) {
+        // Fetch the JSON data and populate the table
+        fetch(sampleFileName)
+          .then((response) => response.json())
+          .then((data) => {
+            const tableBody = document.getElementById("data-table");
+            data.forEach((item) => {
+              const row = document.createElement("tr");
+              row.classList.add("bg-gray-50");
 
-            const modelOutputCell = document.createElement("td");
-            modelOutputCell.classList.add(
-              "py-2",
-              "px-4",
-              "border-b",
-              "border-gray-200",
-              "markdown-cell",
-              "align-top"
-            );
-            modelOutputCell.innerHTML = marked.parse(item.ModelOutput || "N/A"); // Convert markdown to HTML
-            row.appendChild(modelOutputCell);
+              const questionCell = document.createElement("td");
+              questionCell.classList.add(
+                "py-2",
+                "px-4",
+                "border-b",
+                "border-gray-200",
+                "question-cell",
+                "align-top"
+              );
+              questionCell.textContent = item.Question;
+              row.appendChild(questionCell);
 
-            const expertReviewCell = document.createElement("td");
-            expertReviewCell.classList.add(
-              "py-2",
-              "px-4",
-              "border-b",
-              "border-gray-200",
-              "markdown-cell",
-              "align-top"
-            );
+              const modelOutputCell = document.createElement("td");
+              modelOutputCell.classList.add(
+                "py-2",
+                "px-4",
+                "border-b",
+                "border-gray-200",
+                "markdown-cell",
+                "align-top"
+              );
+              modelOutputCell.innerHTML = marked.parse(item.ModelOutput || "N/A"); // Convert markdown to HTML
+              row.appendChild(modelOutputCell);
 
-            // Calculate and highlight differences
-            const diff = Diff.diffWords(
-              item.ModelOutput || "",
-              item.ExpertReview || ""
-            );
-            const diffHtml = diff.map(part => {
-              if (part.added) {
-                return `<span class="diff-added">${part.value}</span>`;
-              }
-              return part.removed ? '' : part.value;
-            }).join('');
+              const expertReviewCell = document.createElement("td");
+              expertReviewCell.classList.add(
+                "py-2",
+                "px-4",
+                "border-b",
+                "border-gray-200",
+                "markdown-cell",
+                "align-top"
+              );
 
-            // Insert the diff into the expert review cell
-            expertReviewCell.innerHTML = marked.parse(diffHtml);
-            row.appendChild(expertReviewCell);
+              // Calculate and highlight differences
+              const diff = Diff.diffWords(
+                item.ModelOutput || "",
+                item.ExpertReview || ""
+              );
+              const diffHtml = diff.map(part => {
+                if (part.added) {
+                  return `<span class="diff-added">${part.value}</span>`;
+                }
+                return part.removed ? '' : part.value;
+              }).join('');
 
-            tableBody.appendChild(row);
-          });
-        })
-        .catch((error) => console.error("Error fetching JSON:", error));
+              // Insert the diff into the expert review cell
+              expertReviewCell.innerHTML = marked.parse(diffHtml);
+              row.appendChild(expertReviewCell);
+
+              tableBody.appendChild(row);
+            });
+          })
+          .catch((error) => console.error("Error fetching JSON:", error));
+      } else {
+        console.error('No sample file specified in the query parameters.');
+      }
     </script>
   </body>
 </html>
