@@ -3,140 +3,153 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Model vs Expert Review</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/diff/dist/diff.min.js"></script>
+    <title>Caledon Samples</title>
+    <!-- Include Showdown.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    <!-- Include PapaParse for CSV parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+    <!-- Include jsdiff -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/5.0.0/diff.min.js"></script>
     <style>
-      /* Custom styles for the table */
-      .question-cell {
-        font-size: 1.25rem; /* Larger font size for questions */
-        font-weight: bold;
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
       }
-      .markdown-cell {
-        font-size: 0.875rem; /* Smaller font size for markdown content */
-        white-space: pre-wrap; /* Preserve line breaks */
-        line-height: 1.5; /* Increase line height for better readability */
+      table th,
+      table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        vertical-align: top;
       }
-      /* Ensure list styles are visible and properly aligned */
-      ul,
-      ol {
-        margin-left: 1.5rem;
-        list-style-type: disc; /* Ensure bullets are shown */
-        list-style-position: outside; /* Ensure bullets are outside the text */
+      table th {
+        background-color: #f4f4f4;
       }
-      /* Thicker and more visible row borders */
-      tr {
-        border-bottom: 2px solid #ccc; /* Thicker border */
-      }
-      /* Highlight differences */
       .diff-added {
-        background-color: #d4fcbc; /* Light green for additions */
+        background-color: #d4f4d7; /* Light green */
+      }
+      pre {
+        margin: 0;
+        white-space: pre-wrap;
+        word-wrap: break-word;
       }
     </style>
   </head>
   <body class="bg-gray-100 p-6">
-    <div class="container mx-auto">
-      <h1 class="text-2xl font-bold mb-4">Model Output vs Expert Review</h1>
-      <table class="min-w-full bg-white">
-        <thead>
-          <tr>
-            <th class="py-2 px-4 border-b-2 border-gray-300 text-left">
-              Question
-            </th>
-            <th class="py-2 px-4 border-b-2 border-gray-300 text-left">
-              Model Output
-            </th>
-            <th class="py-2 px-4 border-b-2 border-gray-300 text-left">
-              Expert Review
-            </th>
-          </tr>
-        </thead>
-        <tbody id="data-table">
-          <!-- Data will be inserted here by JavaScript -->
-        </tbody>
-      </table>
-    </div>
+    <h1 class="text-2xl font-bold mb-4 text-center">Caledon Samples</h1>
+    <div
+      id="tableContainer"
+      class="overflow-x-auto bg-white shadow-md rounded-lg"
+    ></div>
 
     <script>
-      // Function to get query parameters
-      function getQueryParam(param) {
+      document.addEventListener("DOMContentLoaded", function () {
         const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
+        const sampleParam = urlParams.get("sample") + ".csv";
+
+        if (sampleParam) {
+          fetch(sampleParam)
+            .then((response) => response.text())
+            .then((csvText) => {
+              Papa.parse(csvText, {
+                header: true,
+                skipEmptyLines: true,
+                complete: function (results) {
+                  renderWithAdditions(results.data);
+                },
+                error: function (error) {
+                  console.error("Error parsing CSV:", error);
+                },
+              });
+            })
+            .catch((error) => {
+              console.error("Error fetching CSV:", error);
+            });
+        } else {
+          console.error("No sample parameter provided in the URL.");
+        }
+      });
+
+      function renderWithAdditions(data) {
+        const showdownConverter = new showdown.Converter(); // Initialize Showdown.js
+
+        // Create table element
+        const table = document.createElement("table");
+        const thead = document.createElement("thead");
+        const tbody = document.createElement("tbody");
+
+        // Render table headers
+        const headerRow = document.createElement("tr");
+        Object.keys(data[0]).forEach((header) => {
+          const th = document.createElement("th");
+          th.textContent = header;
+          headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+
+        // Render table rows
+        data.forEach((row) => {
+          const rowElement = document.createElement("tr");
+          Object.entries(row).forEach(([key, value]) => {
+            const td = document.createElement("td");
+            let markdownContent = value ? value.toString().trim() : "";
+
+            // If column is ExpertReview, handle additions highlighting
+            if (key === "ExpertReview") {
+              const modelMarkdown = row["ModelOutput"] || "";
+              const expertMarkdown = markdownContent;
+
+              // Highlight only additions while preserving the full ExpertReview content
+              const highlightedMarkdown = highlightAdditions(
+                modelMarkdown,
+                expertMarkdown
+              );
+
+              // Render Markdown using Showdown.js
+              td.innerHTML = showdownConverter.makeHtml(highlightedMarkdown);
+            } else if (key === "ModelOutput") {
+              td.innerHTML = showdownConverter.makeHtml(markdownContent);
+            } else {
+              // Render other columns without Markdown conversion
+              td.textContent = markdownContent;
+            }
+
+            rowElement.appendChild(td);
+          });
+          tbody.appendChild(rowElement);
+        });
+
+        table.appendChild(thead);
+        table.appendChild(tbody);
+
+        // Append the table to the container
+        const container = document.getElementById("tableContainer");
+        container.innerHTML = ""; // Clear previous content
+        container.appendChild(table);
       }
 
-      // Get the sample file name from the query parameter
-      const sampleFileName = getQueryParam('sample');
+      function highlightAdditions(modelMarkdown, expertMarkdown) {
+        // Use JsDiff.diffWords to calculate differences
+        const diff = Diff.diffWords(modelMarkdown, expertMarkdown);
 
-      if (sampleFileName) {
-        // Fetch the JSON data and populate the table
-        fetch(sampleFileName)
-          .then((response) => response.json())
-          .then((data) => {
-            const tableBody = document.getElementById("data-table");
-            data.forEach((item) => {
-              const row = document.createElement("tr");
-              row.classList.add("bg-gray-50");
+        // Build highlighted Markdown
+        let highlightedMarkdown = "";
+        diff.forEach((part) => {
+          if (part.added) {
+            // Highlight additions
+            if (part.value.trim().length >= 10) {
+              // Ignore additions smaller than 10 characters
+              highlightedMarkdown += `<span class="diff-added">${part.value}</span>`;
+            } else {
+              highlightedMarkdown += part.value; // Add without highlighting
+            }
+          } else if (!part.removed) {
+            // Keep unchanged text
+            highlightedMarkdown += part.value;
+          }
+        });
 
-              const questionCell = document.createElement("td");
-              questionCell.classList.add(
-                "py-2",
-                "px-4",
-                "border-b",
-                "border-gray-200",
-                "question-cell",
-                "align-top"
-              );
-              questionCell.textContent = item.Question;
-              row.appendChild(questionCell);
-
-              const modelOutputCell = document.createElement("td");
-              modelOutputCell.classList.add(
-                "py-2",
-                "px-4",
-                "border-b",
-                "border-gray-200",
-                "markdown-cell",
-                "align-top"
-              );
-              modelOutputCell.innerHTML = marked.parse(item.ModelOutput || "N/A"); // Convert markdown to HTML
-              row.appendChild(modelOutputCell);
-
-              const expertReviewCell = document.createElement("td");
-              expertReviewCell.classList.add(
-                "py-2",
-                "px-4",
-                "border-b",
-                "border-gray-200",
-                "markdown-cell",
-                "align-top"
-              );
-
-              // Calculate and highlight differences
-              const diff = Diff.diffWords(
-                item.ModelOutput || "",
-                item.ExpertReview || ""
-              );
-              const diffHtml = diff.map(part => {
-                if (part.added) {
-                  return `<span class="diff-added">${part.value}</span>`;
-                }
-                return part.removed ? '' : part.value;
-              }).join('');
-
-              // Insert the diff into the expert review cell
-              expertReviewCell.innerHTML = marked.parse(diffHtml);
-              row.appendChild(expertReviewCell);
-
-              tableBody.appendChild(row);
-            });
-          })
-          .catch((error) => console.error("Error fetching JSON:", error));
-      } else {
-        console.error('No sample file specified in the query parameters.');
+        return highlightedMarkdown.trim(); // Return the final Markdown with highlights
       }
     </script>
   </body>
