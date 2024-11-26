@@ -55,7 +55,7 @@
                 header: true,
                 skipEmptyLines: true,
                 complete: function (results) {
-                  renderWithAdditions(results.data);
+                  renderWithAdditions(results.data, sampleParam);
                 },
                 error: function (error) {
                   console.error("Error parsing CSV:", error);
@@ -70,7 +70,7 @@
         }
       });
 
-      function renderWithAdditions(data) {
+      function renderWithAdditions(data, sampleParam) {
         const showdownConverter = new showdown.Converter(); // Initialize Showdown.js
 
         // Create table element
@@ -102,7 +102,8 @@
               // Highlight only additions while preserving the full ExpertReview content
               const highlightedMarkdown = highlightAdditions(
                 modelMarkdown,
-                expertMarkdown
+                expertMarkdown,
+                sampleParam
               );
 
               // Render Markdown using Showdown.js
@@ -128,7 +129,12 @@
         container.appendChild(table);
       }
 
-      function highlightAdditions(modelMarkdown, expertMarkdown) {
+      function highlightAdditions(modelMarkdown, expertMarkdown, sampleParam) {
+        // Check if the sample is the specific one to not highlight
+        if (sampleParam === "2ddb8d3d-18bf-42ed-955f-da8ae4262091.csv") {
+          return expertMarkdown; // Return the expertMarkdown without any highlighting
+        }
+
         // Use JsDiff.diffWords to calculate differences
         const diff = Diff.diffWords(modelMarkdown, expertMarkdown);
 
