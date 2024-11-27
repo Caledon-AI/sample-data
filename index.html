@@ -1,162 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Caledon Samples</title>
-    <!-- Include Showdown.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
-    <!-- Include PapaParse for CSV parsing -->
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-    <!-- Include jsdiff -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/5.0.0/diff.min.js"></script>
-    <style>
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-      }
-      table th,
-      table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        vertical-align: top;
-      }
-      table th {
-        background-color: #f4f4f4;
-      }
-      .diff-added {
-        background-color: #d4f4d7; /* Light green */
-      }
-      pre {
-        margin: 0;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-      }
-    </style>
-  </head>
-  <body class="bg-gray-100 p-6">
-    <h1 class="text-2xl font-bold mb-4 text-center">Caledon Samples</h1>
-    <div
-      id="tableContainer"
-      class="overflow-x-auto bg-white shadow-md rounded-lg"
-    ></div>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const urlParams = new URLSearchParams(window.location.search);
-        const sampleParam = urlParams.get("sample") + ".csv";
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caledon Samples</title>
+  <!-- Include Showdown.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+  <!-- Include PapaParse for CSV parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+  <!-- Include jsdiff -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/5.0.0/diff.min.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7SXTW78G5E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
 
-        if (sampleParam) {
-          fetch(sampleParam)
-            .then((response) => response.text())
-            .then((csvText) => {
-              Papa.parse(csvText, {
-                header: true,
-                skipEmptyLines: true,
-                complete: function (results) {
-                  renderWithAdditions(results.data, sampleParam);
-                },
-                error: function (error) {
-                  console.error("Error parsing CSV:", error);
-                },
-              });
-            })
-            .catch((error) => {
-              console.error("Error fetching CSV:", error);
+    gtag("config", "G-7SXTW78G5E");
+  </script>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table th,
+    table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      vertical-align: top;
+    }
+
+    table th {
+      background-color: #f4f4f4;
+    }
+
+    .diff-added {
+      background-color: #d4f4d7;
+      /* Light green */
+    }
+
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 p-6">
+  <h1 class="text-2xl font-bold mb-4 text-center">Caledon Samples</h1>
+  <div id="tableContainer" class="overflow-x-auto bg-white shadow-md rounded-lg"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const sampleParam = urlParams.get("sample") + ".csv";
+
+      if (sampleParam) {
+        fetch(sampleParam)
+          .then((response) => response.text())
+          .then((csvText) => {
+            Papa.parse(csvText, {
+              header: true,
+              skipEmptyLines: true,
+              complete: function (results) {
+                renderWithAdditions(results.data, sampleParam);
+              },
+              error: function (error) {
+                console.error("Error parsing CSV:", error);
+              },
             });
-        } else {
-          console.error("No sample parameter provided in the URL.");
+          })
+          .catch((error) => {
+            console.error("Error fetching CSV:", error);
+          });
+      } else {
+        console.error("No sample parameter provided in the URL.");
+      }
+    });
+
+    function renderWithAdditions(data, sampleParam) {
+      const showdownConverter = new showdown.Converter(); // Initialize Showdown.js
+
+      // Create table element
+      const table = document.createElement("table");
+      const thead = document.createElement("thead");
+      const tbody = document.createElement("tbody");
+
+      // Render table headers
+      const headerRow = document.createElement("tr");
+      Object.keys(data[0]).forEach((header) => {
+        const th = document.createElement("th");
+        th.textContent = header;
+        headerRow.appendChild(th);
+      });
+      thead.appendChild(headerRow);
+
+      // Render table rows
+      data.forEach((row) => {
+        const rowElement = document.createElement("tr");
+        Object.entries(row).forEach(([key, value]) => {
+          const td = document.createElement("td");
+          let markdownContent = value ? value.toString().trim() : "";
+
+          // If column is ExpertReview, handle additions highlighting
+          if (key === "ExpertReview") {
+            const modelMarkdown = row["ModelOutput"] || "";
+            const expertMarkdown = markdownContent;
+
+            // Highlight only additions while preserving the full ExpertReview content
+            const highlightedMarkdown = highlightAdditions(
+              modelMarkdown,
+              expertMarkdown,
+              sampleParam
+            );
+
+            // Render Markdown using Showdown.js
+            td.innerHTML = showdownConverter.makeHtml(highlightedMarkdown);
+          } else if (key === "ModelOutput") {
+            td.innerHTML = showdownConverter.makeHtml(markdownContent);
+          } else {
+            // Render other columns without Markdown conversion
+            td.textContent = markdownContent;
+          }
+
+          rowElement.appendChild(td);
+        });
+        tbody.appendChild(rowElement);
+      });
+
+      table.appendChild(thead);
+      table.appendChild(tbody);
+
+      // Append the table to the container
+      const container = document.getElementById("tableContainer");
+      container.innerHTML = ""; // Clear previous content
+      container.appendChild(table);
+    }
+
+    function highlightAdditions(modelMarkdown, expertMarkdown, sampleParam) {
+      // Check if the sample is the specific one to not highlight
+      if (sampleParam === "2ddb8d3d-18bf-42ed-955f-da8ae4262091.csv") {
+        return expertMarkdown; // Return the expertMarkdown without any highlighting
+      }
+
+      // Use JsDiff.diffWords to calculate differences
+      const diff = Diff.diffWords(modelMarkdown, expertMarkdown);
+
+      // Build highlighted Markdown
+      let highlightedMarkdown = "";
+      diff.forEach((part) => {
+        if (part.added) {
+          // Highlight additions
+          if (part.value.trim().length >= 10) {
+            // Ignore additions smaller than 10 characters
+            highlightedMarkdown += `<span class="diff-added">${part.value}</span>`;
+          } else {
+            highlightedMarkdown += part.value; // Add without highlighting
+          }
+        } else if (!part.removed) {
+          // Keep unchanged text
+          highlightedMarkdown += part.value;
         }
       });
 
-      function renderWithAdditions(data, sampleParam) {
-        const showdownConverter = new showdown.Converter(); // Initialize Showdown.js
+      return highlightedMarkdown.trim(); // Return the final Markdown with highlights
+    }
+  </script>
+</body>
 
-        // Create table element
-        const table = document.createElement("table");
-        const thead = document.createElement("thead");
-        const tbody = document.createElement("tbody");
-
-        // Render table headers
-        const headerRow = document.createElement("tr");
-        Object.keys(data[0]).forEach((header) => {
-          const th = document.createElement("th");
-          th.textContent = header;
-          headerRow.appendChild(th);
-        });
-        thead.appendChild(headerRow);
-
-        // Render table rows
-        data.forEach((row) => {
-          const rowElement = document.createElement("tr");
-          Object.entries(row).forEach(([key, value]) => {
-            const td = document.createElement("td");
-            let markdownContent = value ? value.toString().trim() : "";
-
-            // If column is ExpertReview, handle additions highlighting
-            if (key === "ExpertReview") {
-              const modelMarkdown = row["ModelOutput"] || "";
-              const expertMarkdown = markdownContent;
-
-              // Highlight only additions while preserving the full ExpertReview content
-              const highlightedMarkdown = highlightAdditions(
-                modelMarkdown,
-                expertMarkdown,
-                sampleParam
-              );
-
-              // Render Markdown using Showdown.js
-              td.innerHTML = showdownConverter.makeHtml(highlightedMarkdown);
-            } else if (key === "ModelOutput") {
-              td.innerHTML = showdownConverter.makeHtml(markdownContent);
-            } else {
-              // Render other columns without Markdown conversion
-              td.textContent = markdownContent;
-            }
-
-            rowElement.appendChild(td);
-          });
-          tbody.appendChild(rowElement);
-        });
-
-        table.appendChild(thead);
-        table.appendChild(tbody);
-
-        // Append the table to the container
-        const container = document.getElementById("tableContainer");
-        container.innerHTML = ""; // Clear previous content
-        container.appendChild(table);
-      }
-
-      function highlightAdditions(modelMarkdown, expertMarkdown, sampleParam) {
-        // Check if the sample is the specific one to not highlight
-        if (sampleParam === "2ddb8d3d-18bf-42ed-955f-da8ae4262091.csv") {
-          return expertMarkdown; // Return the expertMarkdown without any highlighting
-        }
-
-        // Use JsDiff.diffWords to calculate differences
-        const diff = Diff.diffWords(modelMarkdown, expertMarkdown);
-
-        // Build highlighted Markdown
-        let highlightedMarkdown = "";
-        diff.forEach((part) => {
-          if (part.added) {
-            // Highlight additions
-            if (part.value.trim().length >= 10) {
-              // Ignore additions smaller than 10 characters
-              highlightedMarkdown += `<span class="diff-added">${part.value}</span>`;
-            } else {
-              highlightedMarkdown += part.value; // Add without highlighting
-            }
-          } else if (!part.removed) {
-            // Keep unchanged text
-            highlightedMarkdown += part.value;
-          }
-        });
-
-        return highlightedMarkdown.trim(); // Return the final Markdown with highlights
-      }
-    </script>
-  </body>
 </html>
