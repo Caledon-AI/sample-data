@@ -51,7 +51,15 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        fetch("318cac71-b0d9-47e9-925e-2d5e83b22165.csv")
+        const urlParams = new URLSearchParams(window.location.search);
+        const csvPath = urlParams.get('sample');
+
+        if (!csvPath) {
+          console.error("No CSV path provided in query parameters.");
+          return;
+        }
+
+        fetch(csvPath)
           .then((response) => response.text())
           .then((csvText) => {
             console.log("CSV Text:", csvText); // Log the raw CSV text
