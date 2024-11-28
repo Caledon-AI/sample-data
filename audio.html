@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Audio Clips</title>
+    <style>
+      .diff-added {
+        background-color: #d4f4d7; /* Light green */
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        table-layout: fixed; /* Ensures the table fits within the screen */
+      }
+      table th,
+      table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        vertical-align: top;
+        word-wrap: break-word; /* Ensures text wraps within cells */
+        overflow-wrap: break-word; /* For better compatibility */
+      }
+      table th {
+        background-color: #f4f4f4;
+      }
+      pre {
+        white-space: pre-wrap; /* Ensures preformatted text wraps */
+        word-wrap: break-word;
+        margin: 0;
+      }
+    </style>
+    <!-- Include PapaParse for CSV parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+    <!-- Include jsdiff -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/5.0.0/diff.min.js"></script>
+  </head>
+  <body>
+    <h1>Audio Clips with Transcripts</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Audio</th>
+          <th>Original Transcript</th>
+          <th>Updated Transcript</th>
+        </tr>
+      </thead>
+      <tbody id="audioContainer"></tbody>
+    </table>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("318cac71-b0d9-47e9-925e-2d5e83b22165.csv")
+          .then((response) => response.text())
+          .then((csvText) => {
+            console.log("CSV Text:", csvText); // Log the raw CSV text
+            Papa.parse(csvText, {
+              header: true,
+              skipEmptyLines: true,
+              complete: function (results) {
+                console.log("Parsed Data:", results.data); // Log the parsed data
+                renderAudioClips(results.data);
+              },
+              error: function (error) {
+                console.error("Error parsing CSV:", error);
+              },
+            });
+          })
+          .catch((error) => {
+            console.error("Error fetching CSV:", error);
+          });
+      });
+
+      function renderAudioClips(data) {
+        const container = document.getElementById("audioContainer");
+        data.forEach((row) => {
+          const audioUrl = row["Audio Clip Url"];
+          const originalTranscript = row["Original Transcript"];
+          const updatedTranscript = row["Updated Transcript"];
+
+          if (!audioUrl || !originalTranscript || !updatedTranscript) {
+            console.error("Missing data in row:", row);
+            return;
+          }
+
+          const diff = Diff.diffWords(originalTranscript, updatedTranscript);
+          let highlightedTranscript = "";
+          diff.forEach((part) => {
+            const escapedValue = part.value
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;");
+            if (part.added) {
+              highlightedTranscript += `<span class="diff-added">${escapedValue}</span>`;
+            } else if (!part.removed) {
+              highlightedTranscript += escapedValue;
+            }
+          });
+
+          const rowElement = document.createElement("tr");
+          rowElement.innerHTML = `
+                    <td>
+                        <audio controls>
+                            <source src="${audioUrl}" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </td>
+                    <td><pre>${originalTranscript
+                      .replace(/</g, "&lt;")
+                      .replace(/>/g, "&gt;")}</pre></td>
+                    <td><pre>${highlightedTranscript}</pre></td>
+                `;
+          container.appendChild(rowElement);
+        });
+      }
+    </script>
+  </body>
+</html>
