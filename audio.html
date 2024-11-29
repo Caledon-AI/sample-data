@@ -3,56 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Audio Clips</title>
-    <style>
-      .diff-added {
-        background-color: #d4f4d7; /* Light green */
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        table-layout: fixed; /* Ensures the table fits within the screen */
-      }
-      table th,
-      table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        vertical-align: top;
-        word-wrap: break-word; /* Ensures text wraps within cells */
-        overflow-wrap: break-word; /* For better compatibility */
-      }
-      table th {
-        background-color: #f4f4f4;
-      }
-      pre {
-        white-space: pre-wrap; /* Ensures preformatted text wraps */
-        word-wrap: break-word;
-        margin: 0;
-      }
-    </style>
+    <title>Audio Annotations</title>
+    <!-- Include Tailwind CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
     <!-- Include PapaParse for CSV parsing -->
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
     <!-- Include jsdiff -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/5.0.0/diff.min.js"></script>
   </head>
-  <body>
-    <h1>Audio Clips with Transcripts</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Audio</th>
-          <th>Original Transcript</th>
-          <th>Updated Transcript</th>
-        </tr>
-      </thead>
-      <tbody id="audioContainer"></tbody>
-    </table>
+  <body class="bg-gray-100 text-gray-800">
+    <div class="container mx-auto p-4">
+      <h1 class="text-2xl font-bold mb-4">Resemble AI Annotations</h1>
+      <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+        <thead>
+          <tr
+            class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
+          >
+            <th class="py-3 px-6 text-left">Audio</th>
+            <th class="py-3 px-6 text-left">Original Transcript</th>
+            <th class="py-3 px-6 text-left">Updated Transcript</th>
+          </tr>
+        </thead>
+        <tbody
+          id="audioContainer"
+          class="text-gray-700 text-sm font-light"
+        ></tbody>
+      </table>
+    </div>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const urlParams = new URLSearchParams(window.location.search);
-        const csvPath = urlParams.get('sample');
+        const csvPath = urlParams.get("sample");
 
         if (!csvPath) {
           console.error("No CSV path provided in query parameters.");
@@ -99,24 +84,25 @@
               .replace(/</g, "&lt;")
               .replace(/>/g, "&gt;");
             if (part.added) {
-              highlightedTranscript += `<span class="diff-added">${escapedValue}</span>`;
+              highlightedTranscript += `<span class="bg-green-200">${escapedValue}</span>`;
             } else if (!part.removed) {
               highlightedTranscript += escapedValue;
             }
           });
 
           const rowElement = document.createElement("tr");
+          rowElement.className = "border-b border-gray-200 hover:bg-gray-100";
           rowElement.innerHTML = `
-                    <td>
+                    <td class="py-3 px-6">
                         <audio controls>
                             <source src="${audioUrl}" type="audio/wav">
                             Your browser does not support the audio element.
                         </audio>
                     </td>
-                    <td><pre>${originalTranscript
+                    <td class="py-3 px-6"><pre class="whitespace-pre-wrap">${originalTranscript
                       .replace(/</g, "&lt;")
                       .replace(/>/g, "&gt;")}</pre></td>
-                    <td><pre>${highlightedTranscript}</pre></td>
+                    <td class="py-3 px-6"><pre class="whitespace-pre-wrap">${highlightedTranscript}</pre></td>
                 `;
           container.appendChild(rowElement);
         });
