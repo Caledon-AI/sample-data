@@ -82,7 +82,7 @@
 
       function renderAudioClips(data) {
         const container = document.getElementById("audioContainer");
-        data.forEach((row) => {
+        data.forEach((row, index) => {
           const audioUrl = row["Audio Clip Url"];
           const originalTranscript = row["Original Transcript"];
           const updatedTranscript = row["Updated Transcript"];
