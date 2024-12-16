@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Audio Annotations</title>
   <!-- Include Tailwind CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
   <!-- Include PapaParse for CSV parsing -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
   <!-- Include jsdiff -->
@@ -67,7 +67,7 @@
     document.addEventListener("DOMContentLoaded", async function () {
       const csvs = {
         "10": "22951e9a-0b5d-411e-85d1-a839e495a2b4.csv",
-        "20": "9c481892-2dee-4c28-a1ee-a3f9c665b52d.csv",
+        "20": "40.csv",
         "30": "b659b84b-a7fc-48d2-87ec-e06e09eac29c.csv",
       }
 
@@ -149,18 +149,18 @@
         const rowElement = document.createElement("tr");
         rowElement.className = "border-b border-gray-200 hover:bg-gray-100";
         rowElement.innerHTML = `
-                    <td class="py-3 px-6">
+                    <td class="py-3 px-6 min-w-80">
                         <audio controls>
                             <source src="${audioUrl}" type="audio/wav">
                             Your browser does not support the audio element.
                         </audio>
                     </td>
-                    <td class="py-3 px-6"><pre class="whitespace-pre-wrap">${originalTranscript
+                    <td class="py-3 px-6 align-top min-w-80"><pre class="whitespace-pre-wrap">${originalTranscript
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")}</pre></td>
-                    <td class="py-3 px-6 align-top show-10"><pre class="whitespace-pre-wrap">${sampleTranscript_10}</pre></td>
-                    <td class="py-3 px-6 align-top show-20"><pre class="whitespace-pre-wrap">${sampleTranscript_20}</pre></td>
-                    <td class="py-3 px-6 align-top show-30"><pre class="whitespace-pre-wrap">${sampleTranscript_30}</pre></td>
+                    <td class="py-3 px-6 align-top show-10 min-w-80"><pre class="whitespace-pre-wrap">${sampleTranscript_10}</pre></td>
+                    <td class="py-3 px-6 align-top show-20 min-w-80"><pre class="whitespace-pre-wrap">${sampleTranscript_20}</pre></td>
+                    <td class="py-3 px-6 align-top show-30 min-w-80"><pre class="whitespace-pre-wrap">${sampleTranscript_30}</pre></td>
 
                 `;
         container.appendChild(rowElement);
