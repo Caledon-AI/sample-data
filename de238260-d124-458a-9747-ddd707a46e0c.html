@@ -16,14 +16,47 @@
 <body class="bg-gray-100 text-gray-800">
   <div class="container mx-auto p-4">
     <h1 class="text-2xl font-bold mb-4">Audio Annotations</h1>
+    <div class="mb-4">
+      <label class="inline-flex items-center">
+        <input type="checkbox" class="form-checkbox" id="toggle-10" checked>
+        <span class="ml-2">Show $10 Sample</span>
+      </label>
+      <label class="inline-flex items-center ml-4">
+        <input type="checkbox" class="form-checkbox" id="toggle-20" checked>
+        <span class="ml-2">Show $20 Sample</span>
+      </label>
+      <label class="inline-flex items-center ml-4">
+        <input type="checkbox" class="form-checkbox" id="toggle-30" checked>
+        <span class="ml-2">Show $30 Sample</span>
+      </label>
+    </div>
+    <script>
+      document.getElementById('toggle-10').addEventListener('change', function() {
+        document.querySelectorAll('.show-10').forEach(el => {
+          el.classList.toggle('hidden', !this.checked);
+        });
+      });
+
+      document.getElementById('toggle-20').addEventListener('change', function() {
+        document.querySelectorAll('.show-20').forEach(el => {
+          el.classList.toggle('hidden', !this.checked);
+        });
+      });
+
+      document.getElementById('toggle-30').addEventListener('change', function() {
+        document.querySelectorAll('.show-30').forEach(el => {
+          el.classList.toggle('hidden', !this.checked);
+        });
+      });
+    </script>
     <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
       <thead>
         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
           <th class="py-3 px-6 text-left">Audio</th>
           <th class="py-3 px-6 text-left">Original Transcript</th>
-          <th class="py-3 px-6 text-left">$10 Sample</th>
-          <th class="py-3 px-6 text-left">$20 Sample</th>
-          <th class="py-3 px-6 text-left">$30 Sample</th>
+          <th class="py-3 px-6 text-left show-10">$10 Sample</th>
+          <th class="py-3 px-6 text-left show-20">$20 Sample</th>
+          <th class="py-3 px-6 text-left show-30">$30 Sample</th>
         </tr>
       </thead>
       <tbody id="audioContainer" class="text-gray-700 text-sm font-light"></tbody>
@@ -125,9 +158,9 @@
                     <td class="py-3 px-6"><pre class="whitespace-pre-wrap">${originalTranscript
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")}</pre></td>
-                    <td class="py-3 px-6 align-top"><pre class="whitespace-pre-wrap">${sampleTranscript_10}</pre></td>
-                    <td class="py-3 px-6 align-top"><pre class="whitespace-pre-wrap">${sampleTranscript_20}</pre></td>
-                    <td class="py-3 px-6 align-top"><pre class="whitespace-pre-wrap">${sampleTranscript_30}</pre></td>
+                    <td class="py-3 px-6 align-top show-10"><pre class="whitespace-pre-wrap">${sampleTranscript_10}</pre></td>
+                    <td class="py-3 px-6 align-top show-20"><pre class="whitespace-pre-wrap">${sampleTranscript_20}</pre></td>
+                    <td class="py-3 px-6 align-top show-30"><pre class="whitespace-pre-wrap">${sampleTranscript_30}</pre></td>
 
                 `;
         container.appendChild(rowElement);
