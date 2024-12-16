@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audio Annotations</title>
+  <!-- Include Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <!-- Include PapaParse for CSV parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+  <!-- Include jsdiff -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/5.0.0/diff.min.js"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+  <div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Audio Annotations</h1>
+    <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+      <thead>
+        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+          <th class="py-3 px-6 text-left">Audio</th>
+          <th class="py-3 px-6 text-left">Original Transcript</th>
+          <th class="py-3 px-6 text-left">$10 Sample</th>
+          <th class="py-3 px-6 text-left">$20 Sample</th>
+          <th class="py-3 px-6 text-left">$30 Sample</th>
+        </tr>
+      </thead>
+      <tbody id="audioContainer" class="text-gray-700 text-sm font-light"></tbody>
+    </table>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+      const csvs = {
+        "10": "22951e9a-0b5d-411e-85d1-a839e495a2b4.csv",
+        "20": "9c481892-2dee-4c28-a1ee-a3f9c665b52d.csv",
+        "30": "b659b84b-a7fc-48d2-87ec-e06e09eac29c.csv",
+      }
+
+      let data = {};
+      
+      // loop through csvs
+      for (const [key, value] of Object.entries(csvs)) {
+        data[key] = await fetch(value)
+          .then((response) => response.text())
+          .then((csvText) => {
+            // console.log("CSV Text:", csvText); // Log the raw CSV text
+            return new Promise((resolve, reject) => {
+              Papa.parse(csvText, {
+                header: true,
+                skipEmptyLines: true,
+                complete: function (results) {
+                  // console.log("Parsed Data:", results.data);
+                  resolve(results.data);
+                },
+                error: function (error) {
+                  console.error("Error parsing CSV:", error);
+                  reject(error);
+                },
+              });
+            });
+          })
+          .catch((error) => {
+            console.error("Error fetching CSV:", error);
+          });
+      }
+      
+
+
+      // do it for all keys in data 
+      for (const [key, value] of Object.entries(data)) {
+        for (const row of value) {
+          row["Highlighted Transcript"] = addHighlightedDiffs(row);
+        }
+      }
+      console.log(data, "<-");
+      renderAudioClips(await data);
+
+    });
+
+    function addHighlightedDiffs(row) {
+
+      const audioUrl = row["Audio Clip Url"];
+        const originalTranscript = row["Original Transcript"];
+        const updatedTranscript = row["Updated Transcript"];
+
+        if (!audioUrl || !originalTranscript || !updatedTranscript) {
+          console.error("Missing data in row:", row);
+          return;
+        }
+
+        const diff = Diff.diffWords(originalTranscript, updatedTranscript);
+        let highlightedTranscript = "";
+        diff.forEach((part) => {
+          const escapedValue = part.value
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+          if (part.added) {
+            highlightedTranscript += `<span class="bg-green-200">${escapedValue}</span>`;
+        } else if (!part.removed) {
+          highlightedTranscript += escapedValue;
+        }
+      });
+      return highlightedTranscript;
+    }
+
+    function renderAudioClips(data) {
+      const container = document.getElementById("audioContainer");
+      data["10"].forEach((row, index) => {
+        const audioUrl = row["Audio Clip Url"];
+        const originalTranscript = row["Original Transcript"];
+        const sampleTranscript_10 = data["10"][index]["Highlighted Transcript"];
+        const sampleTranscript_20 = data["20"][index]["Highlighted Transcript"];
+        const sampleTranscript_30 = data["30"][index]["Highlighted Transcript"];
+        const rowElement = document.createElement("tr");
+        rowElement.className = "border-b border-gray-200 hover:bg-gray-100";
+        rowElement.innerHTML = `
+                    <td class="py-3 px-6">
+                        <audio controls>
+                            <source src="${audioUrl}" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </td>
+                    <td class="py-3 px-6"><pre class="whitespace-pre-wrap">${originalTranscript
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")}</pre></td>
+                    <td class="py-3 px-6 align-top"><pre class="whitespace-pre-wrap">${sampleTranscript_10}</pre></td>
+                    <td class="py-3 px-6 align-top"><pre class="whitespace-pre-wrap">${sampleTranscript_20}</pre></td>
+                    <td class="py-3 px-6 align-top"><pre class="whitespace-pre-wrap">${sampleTranscript_30}</pre></td>
+
+                `;
+        container.appendChild(rowElement);
+      });
+    }
+  </script>
+</body>
+
+</html>
