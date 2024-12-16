@@ -31,19 +31,19 @@
       </label>
     </div>
     <script>
-      document.getElementById('toggle-10').addEventListener('change', function() {
+      document.getElementById('toggle-10').addEventListener('change', function () {
         document.querySelectorAll('.show-10').forEach(el => {
           el.classList.toggle('hidden', !this.checked);
         });
       });
 
-      document.getElementById('toggle-20').addEventListener('change', function() {
+      document.getElementById('toggle-20').addEventListener('change', function () {
         document.querySelectorAll('.show-20').forEach(el => {
           el.classList.toggle('hidden', !this.checked);
         });
       });
 
-      document.getElementById('toggle-30').addEventListener('change', function() {
+      document.getElementById('toggle-30').addEventListener('change', function () {
         document.querySelectorAll('.show-30').forEach(el => {
           el.classList.toggle('hidden', !this.checked);
         });
@@ -72,7 +72,7 @@
       }
 
       let data = {};
-      
+
       // loop through csvs
       for (const [key, value] of Object.entries(csvs)) {
         data[key] = await fetch(value)
@@ -98,7 +98,7 @@
             console.error("Error fetching CSV:", error);
           });
       }
-      
+
 
 
       // do it for all keys in data 
@@ -107,30 +107,28 @@
           row["Highlighted Transcript"] = addHighlightedDiffs(row);
         }
       }
-      console.log(data, "<-");
       renderAudioClips(await data);
-
     });
 
     function addHighlightedDiffs(row) {
 
       const audioUrl = row["Audio Clip Url"];
-        const originalTranscript = row["Original Transcript"];
-        const updatedTranscript = row["Updated Transcript"];
+      const originalTranscript = row["Original Transcript"];
+      const updatedTranscript = row["Updated Transcript"];
 
-        if (!audioUrl || !originalTranscript || !updatedTranscript) {
-          console.error("Missing data in row:", row);
-          return;
-        }
+      if (!audioUrl || !originalTranscript || !updatedTranscript) {
+        console.error("Missing data in row:", row);
+        return;
+      }
 
-        const diff = Diff.diffWords(originalTranscript, updatedTranscript);
-        let highlightedTranscript = "";
-        diff.forEach((part) => {
-          const escapedValue = part.value
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;");
-          if (part.added) {
-            highlightedTranscript += `<span class="bg-green-200">${escapedValue}</span>`;
+      const diff = Diff.diffWords(originalTranscript, updatedTranscript);
+      let highlightedTranscript = "";
+      diff.forEach((part) => {
+        const escapedValue = part.value
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+        if (part.added) {
+          highlightedTranscript += `<span class="bg-green-200">${escapedValue}</span>`;
         } else if (!part.removed) {
           highlightedTranscript += escapedValue;
         }
