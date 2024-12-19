@@ -1,3 +1,4 @@
+import os
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 class CORSRequestHandler(SimpleHTTPRequestHandler):
@@ -8,6 +9,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
         return super(CORSRequestHandler, self).end_headers()
 
 if __name__ == '__main__':
-    httpd = HTTPServer(('localhost', 8000), CORSRequestHandler)
-    print("Serving on port 8000")
+    port = int(os.environ.get('PORT', 8000))  # Use the PORT environment variable
+    httpd = HTTPServer(('0.0.0.0', port), CORSRequestHandler)  # Bind to all interfaces
+    print(f"Serving on port {port}")
     httpd.serve_forever()
