@@ -1,0 +1,260 @@
+{
+    "company": "AMAZON",
+    "question_type": "Information Extraction",
+    "question": "What is Amazon's year end FY2020 net AR (in USD millions)? Address the question by adopting the perspective of a financial analyst who can only use the details shown within the balance sheet.",
+    "tags" : [
+        {"fiscal_year" : [2020]}
+    ],
+    "answer": "$24,542 (in USD millions)",
+    "justification": "The metric accounts receivable was directly extracted from the company 10K within the balance sheet. The line item name was: Accounts receivable, net and other",
+    "evidence": [
+        {
+            "source" : "Amazon_FY2020_10K",
+            "page_number" : 41,
+            "full_page_text" : ""
+        }
+    ]
+}
+{
+    "company" : "AMAZON",
+    "question_type" : "Information Extraction",
+    "question" : "Has Amazon paid dividends to common shareholders in FY2020?",
+    "tags" : [
+        {"fiscal_year" : [2020]}
+    ],
+    "answer" : "No",
+    "justification" : "Dividends paid to common shareholders would be presented in the Financing Activities section Statement of Cash Flows, the Retained Earnings section of the Statement of Stockholders' Equity, and likely in the footnotes to the financial statements.\n\nAmazon did not pay dividends to common shareholders in 2020. No dividends were reported in the Financing Activities section of the Statement of Cash Flows. Further, no dividends were reported in the Statement of Stockholders' Equity, as dividends paid would have reduced retained earnings during the year. Further, no information regarding the dividends was provided in the Notes to the Financial Statements.",
+    "evidence" : [
+        {
+            "source" : "Amazon_FY2020_10K",
+            "page_number" : 38,
+            "full_page_text" : ""
+        },
+        {
+            "source" : "Amazon_FY2020_10K",
+            "page_number" : 42,
+            "full_page_text" : ""
+        }
+    ]
+}
+{
+    "company" : "AMAZON",
+    "question_type" : "Numerical Reasoning",
+    "question" : "Among operations, investing, and financing activities, which brought in the most (or lost the least) cash flow for Amazon in FY2023?",
+    "tags" : [
+        {"fiscal_year" : [2023]}
+    ],
+    "answer" : "Operating Activities with $89,946 (in USD millions)",
+    "justification" : "For 2023, operating activities provided cash inflows of $84,946 (in USD millions). Investing activities used cash outflows of $49,833 (in USD millions). Financing activities used cash outflows of $15,879 (in USD millions). Therefore, for the year ended 12/31/2023, operating activities brought in the most cash flow for Amazon, with operating cash flows of $84,946 (in USD millions).",
+    "evidence" : [
+        {
+            "source" : "Amazon_FY2023_10K",
+            "page_number" : 37,
+            "full_page_text" : ""
+        }
+    ]
+}
+{
+    "company": "AMAZON",
+    "question_type": "Logical Reasoning",
+    "question": "Are Amazon's gross margins historically consistent (not fluctuating more than roughly 2% each year)? If gross margins are not a relevant metric for a company like this, then please state that and explain why.",
+    "tags" : [
+        {"fiscal_year" : [2021, 2022, 2023]}
+    ],
+    "answer": "Yes, they are historically consistent with a moderate upward trend. Their gross margins for 2021, 2022, and 2023 respectively were 42.03%, 43.81%, and 46.98%. With respect to how relevant the gross margin metric is to Amazon, the company states themselves that they believe operating margin is a more meaningful measure than gross profit and gross margin due to the diversity of their product categories and services.",
+    "justification": "The gross margin (GM) formula is (revenue - cost of sales) / revenue. Using this formula, the following GM's were computed for 2021, 2022, and 2023:\nFY2021 GM = (469,822 - 272,344) / 469,822 = 42.03%\nFY2022 GM = (513,983 - 288,831) / 513,983 = 43.81%\nFY2023 GM = (574,785 - 304,739) / 574,785 = 46.98%\nThese numbers were pulled from the consolidated statement of operations.\n\n\"We believe that operating income is a more meaningful measure than gross profit and gross margin due to the diversity of our product categories and services.\" (page 25)",
+    "evidence": [
+        {
+            "source" : "Amazon_FY2023_10K",
+            "page_number" : 25,
+            "full_page_text" : ""
+        },
+        {
+            "source" : "Amazon_FY2023_10K",
+            "page_number" : 38,
+            "full_page_text" : ""
+        }
+    ]
+}
+{
+    "company": "NVIDIA",
+    "question_type": "Information Extraction",
+    "question": "What is the FY2022 COGS for Nvidia? Please state answer in USD millions. Provide a response to the question by primarily using the statement of income.",
+    "tags" : [
+        {"fiscal_year" : [2022]}
+    ],
+    "answer": "$11,618 (in USD millions) \nNote: Nvidia's business year-end is not Dec 31 but rather Jan 28-29. As such, their COGS for Jan 29, 2023 was used as this would consist the majority of the year of 2022.",
+    "justification": "The metric was found within their consolidated statement of income under the line item: cost of revenue.",
+    "evidence": [
+        {
+            "source" : "Nvidia_FY2023_10K",
+            "page_number" : 50,
+            "full_page_text" : ""
+        }
+    ]
+}
+{
+    "company" : "NVIDIA",
+    "question_type" : "Information Extraction",
+    "question" : "What are the geographies that Nvidia primarily operates in as of FY2023?",
+    "tags" : [
+        {"fiscal_year" : [2023]}
+    ],
+    "answer" : "Nvidia operates internationally; however, the geographic areas with the highest revenue for the year ended January 28, 2024 were United States, Taiwan, and China (including Hong Kong).",
+    "justification" : "Per Note 17 - Segment Information, revenue by geographic areas included the United States, Taiwan, China (including Hong Kong) and other countries. Revenue from sales to customers outside of the United States was 56% for the year ended January 28, 2024.",
+    "evidence" : [
+        {
+            "source" : "Nvidia_FY2023_10K",
+            "page_number" : 79,
+            "full_page_text" : ""
+        }
+    ]
+}
+{
+    "company": "NVIDIA",
+    "question_type": "Numerical Reasoning",
+    "question": "Has Nvidia increased its debt on balance sheet between FY2023 and the FY2022 period?",
+    "tags" : [
+        {"fiscal_year" : [2022, 2023]}
+    ],
+    "answer": "Short-term debt stayed consistent at $1,250 (in USD Millions). Long-term debt decreased from $9,703 (in USD Millions) in 2022 to $8,459 (in USD Millions) in 2023. This indicates that they likely made debt payments within the year and did not take on additional large amounts of debt.",
+    "justification": "This was extracted from their consolidated balance sheets. Specifically, the short-term debt and long-term debt line items were examined.",
+    "evidence": [
+        {
+            "source" : "Nvidia_FY2023_10K",
+            "page_number" : 52,
+            "full_page_text" : ""
+        }
+    ]
+}
+{
+    "company" : "NVIDIA",
+    "question_type" : "Logical Reasoning",
+    "question" : "Does Nvidia have a reasonably healthy liquidity profile based on its quick ratio for Q2 of FY2023? If the quick ratio is not relevant to measure liquidity, please state that and explain why.",
+    "tags" : [
+        {"fiscal_year" : [2023]}
+    ],
+    "answer" : "The quick ratio is a liquidity metric that measures the liquid assets available to cover its current debts. The 10-K only presents financial information on an annual basis. To obtain the quick ratio for Q2 of FY2023, I would need to see the 10-Q for that period. However, the quick ratio for Q4 of FY2023 is 3.38%. This is considered a reasonably healthy quick ratio, as the company has enough liquid assets to cover its short-term debt.",
+    "justification" : "The quick ratio is calculated as: (Total current assets - Inventories - Prepaid expenses)/Total current liabilities. Therefore: (44,345 - 5,282 - 3080) / 10,631 = 3.385%.",
+    "evidence" : [
+        {
+            "source" : "Nvidia_FY2023_10K",
+            "page_number" : 42,
+            "full_page_text" : ""
+        },
+        {
+            "source" : "Nvidia_FY2023_10K",
+            "page_number" : 52,
+            "full_page_text" : ""
+        }
+    ]   
+}
+{
+    "company": "GOOGLE",
+    "question_type": "Information Extraction",
+    "question": "Has Google reported any materially important ongoing legal battles from FY2022 and FY2021?",
+    "tags" : [
+        {"fiscal_year" : [2021, 2022]}
+    ],
+    "answer": "Yes. The company disclosed several legal matters in 2021 and 2022– such as antitrust investigations, patent and IP claims, legal matters relating to Russia, and more– in Note 10. These legal matters are reasonably possible, meaning the likelihood of an adverse outcome is more than remote but less than probable.",
+    "justification": "If a legal liability is probable and can be reasonably estimated, the company must recognize an accrued liability on its balance sheet and in the footnotes to the company's financial statements. Legal liabilities that are reasonably possible must be disclosed in a company's financial statements as a footnote. For legal liabilities with a remote possibility of occuring, no action is required. Such contingencies were disclosed in Note 10.",
+    "evidence": [
+        {
+            "source" : "Google_FY2021_10K",
+            "page_number" : 77,
+            "full_page_text" : ""
+        },
+        {
+            "source" : "Google_FY2021_10K",
+            "page_number" : 78,
+            "full_page_text" : ""
+        },
+        {
+            "source" : "Google_FY2021_10K",
+            "page_number" : 79,
+            "full_page_text" : ""
+        },
+        {
+            "source" : "Google_FY2022_10K",
+            "page_number" : 73,
+            "full_page_text" : ""
+        },
+        {
+            "source" : "Google_FY2022_10K",
+            "page_number" : 74,
+            "full_page_text" : ""
+        },
+        {
+            "source" : "Google_FY2022_10K",
+            "page_number" : 75,
+            "full_page_text" : ""
+        }
+    ]
+}
+{
+    "company": "GOOGLE",
+    "question_type": "Information Extraction",
+    "question": "What are major acquisitions that Google has done in FY2023 and FY2022?",
+    "tags" : [
+        {"fiscal_year" : [2022, 2023]}
+    ],
+    "answer": "Google acquired Mandiant for $6.1B in September 2022. No major acquisitions were made in 2023.",
+    "justification": "In the FY2022 10-K, they specifically highlighted the acquisition of this company as well as had a dedicated note for it in the notes to the consolidated financial statements section, titled: Note 8: Acquisitions. Within 2023, there were no callouts to any notable acquisitions, their line-item for acquisitions in their cash flow statement drastically decreased, and there was no note dedicated to acquisitions in FY2023, indicating that no major acquisitions were conducted within the year.",
+    "evidence": [
+        {
+            "source" : "Google_FY2022_10K",
+            "page_number" : 27,
+            "full_page_text" : ""
+        },
+        {
+            "source" : "Google_FY2022_10K",
+            "page_number" : 31,
+            "full_page_text" : ""
+        },
+        {
+            "source" : "Google_FY2022_10K",
+            "page_number" : 72,
+            "full_page_text" : ""
+        }
+    ]
+}
+{
+    "company": "GOOGLE",
+    "question_type": "Numerical Reasoning",
+    "question": "What is the FY2022 unadjusted EBITDA % margin for Google? Calculate unadjusted EBITDA using unadjusted operating income and D&A (from cash flow statement). Give a response to the question by relying on the details shown in the statement of cash flows and the P&L statement.",
+    "tags" : [
+        {"fiscal_year" : [2022]}
+    ],
+    "answer": "32.09%",
+    "justification": "The EBITDA % margin formula is (operating income + depreciation + amortization) / revenue. Using this formula, the following margin was computed for 2022:\nFY2022 = (74,842 + 15,287 + 641) / 282,836 = 32.09%\nThese values were located within the consolidated statement of income and cash flows.",
+    "evidence" : [
+        {
+            "source" : "Google_FY2022_10K",
+            "page_number" : 48,
+            "full_page_text" : ""
+        },
+        {
+            "source" : "Google_FY2022_10K",
+            "page_number" : 51,
+            "full_page_text" : ""
+        }
+    ]
+}
+{
+    "company": "GOOGLE",
+    "question_type": "Logical Reasoning",
+    "question": "What drove gross margin change as of FY2022 for Google? If gross margin is not a useful metric for a company like this, then please state that and explain why.",
+    "tags" : [
+        {"fiscal_year" : [2022]}
+    ],
+    "answer": "The acquisition of Mandiant.",
+    "justification": "Within Google's disaggregated revenues, Google Cloud revenues increased from $19,206 (in USD Millions) in 2021 to $26,280 (in USD Millions) in 2022, an increase of 36.8%. This is likely due to their acquisition of Mandiant, driving their revenues higher within the FY2022.\n\nThis information was extracted from the company's notes to the consolidated financial statements, within Note 2 specifically.",
+    "evidence": [
+        {
+            "source" : "Google_FY2022_10K",
+            "page_number" : 59,
+            "full_page_text" : ""
+        }
+    ]
+}
+

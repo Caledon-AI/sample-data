@@ -1,0 +1,518 @@
+Company,Question Type,Question,Answer,Justification,Evidence Text,Evidence Page Number,Evidence Document Name
+Amazon,Information Extraction,What is Amazon's year end FY2020 net AR (in USD millions)? Address the question by adopting the perspective of a financial analyst who can only use the details shown within the balance sheet.,"24,542","The metric accounts receivable was directly extracted from the company 10K within the balance sheet. The line item name was: Accounts receivable, net and other","Table of Contents
+
+AMAZON.COM, INC.
+CONSOLIDATED BALANCE SHEETS
+(in millions, except per share data)
+
+December 31,
+2019 2020
+
+ASSETS
+
+Current assets:
+Cash and cash equivalents $ 36,092 $ 42,122
+Marketable securities 18,929 42,274
+Inventories 20,497 23,795
+Accounts receivable, net and other 20,816 24,542
+Total current assets 96,334 132,733
+Property and equipment, net 72,705 113,114
+Operating leases 25,141 37,553
+Goodwill 14,754 15,017
+Other assets 16,314 22,778
+
+Total assets $ 225,248 $ 321,195
+
+LIABILITIES AND STOCKHOLDERS’ EQUITY
+
+Current liabilities:
+Accounts payable $ 47,183 $ 72,539
+Accrued expenses and other 32,439 44,138
+Unearned revenue 8,190 9,708
+Total current liabilities 87,812 126,385
+Long-term lease liabilities 39,791 52,573
+Long-term debt 23,414 31,816
+Other long-term liabilities 12,171 17,017
+Commitments and contingencies (Note 7)
+Stockholders’ equity:
+Preferred stock, $0.01 par value:
+Authorized shares — 500
+Issued and outstanding shares — none — — Common stock, $0.01 par value:
+Authorized shares — 5,000
+Issued shares — 521 and 527
+Outstanding shares — 498 and 503 5 5
+Treasury stock, at cost (1,837) (1,837)
+Additional paid-in capital 33,658 42,865
+Accumulated other comprehensive income (loss) (986) (180)
+Retained earnings 31,220 52,551
+Total stockholders’ equity 62,060 93,404
+Total liabilities and stockholders’ equity $ 225,248 $ 321,195
+
+See accompanying notes to consolidated financial statements.",41,Amazon_FY2020_10K
+Amazon,Information Extraction,Has Amazon paid dividends to common shareholders in FY2020?,No,The metric is not present within the cash flow statement nor the balance sheet. Further inquisition on Google reveals that Amazon does not pay dividends to their shareholders,No evidence text in this case,"38, 41",Amazon_FY2020_10K
+Amazon,Numerical Reasoning,"Among operations, investing, and financing activities, which brought in the most (or lost the least) cash flow for Amazon in FY2023?","84,946 from Operating Activities","This was assessed against the financing and investing amounts for FY2023 found in the consolidated statement of cash flows. The amounts for financing and investing respectively are (49,833) and (15,879)","Table of Contents
+AMAZON.COM, INC.
+CONSOLIDATED STATEMENTS OF CASH FLOWS
+(in millions)
+Year Ended December 31,
+2021 2022 2023
+CASH, CASH EQUIVALENTS, AND RESTRICTED CASH, BEGINNING OF PERIOD $ 42,377 $ 36,477 $ 54,253
+OPERATING ACTIVITIES:
+Net income (loss) 33,364 (2,722) 30,425
+Adjustments to reconcile net income (loss) to net cash from operating activities:
+Depreciation and amortization of property and equipment and capitalized content costs, operating lease
+assets, and other 34,433 41,921 48,663
+Stock-based compensation 12,757 19,621 24,023
+Non-operating expense (income), net (14,306) 16,966 (748)
+Deferred income taxes (310) (8,148) (5,876)
+Changes in operating assets and liabilities:
+Inventories (9,487) (2,592) 1,449
+Accounts receivable, net and other (9,145) (8,622) (8,348)
+Other assets (9,018) (13,275) (12,265)
+Accounts payable 3,602 2,945 5,473
+Accrued expenses and other 2,123 (1,558) (2,428)
+Unearned revenue 2,314 2,216 4,578
+Net cash provided by (used in) operating activities 46,327 46,752 84,946
+INVESTING ACTIVITIES:
+Purchases of property and equipment (61,053) (63,645) (52,729)
+Proceeds from property and equipment sales and incentives 5,657 5,324 4,596
+Acquisitions, net of cash acquired, non-marketable investments, and other (1,985) (8,316) (5,839)
+Sales and maturities of marketable securities 59,384 31,601 5,627
+Purchases of marketable securities (60,157) (2,565) (1,488)
+Net cash provided by (used in) investing activities (58,154) (37,601) (49,833)
+FINANCING ACTIVITIES:
+Common stock repurchased — (6,000) —
+Proceeds from short-term debt, and other 7,956 41,553 18,129
+Repayments of short-term debt, and other (7,753) (37,554) (25,677)
+Proceeds from long-term debt 19,003 21,166 —
+Repayments of long-term debt (1,590) (1,258) (3,676)
+Principal repayments of finance leases (11,163) (7,941) (4,384)
+Principal repayments of financing obligations (162) (248) (271)
+Net cash provided by (used in) financing activities 6,291 9,718 (15,879)
+Foreign currency effect on cash, cash equivalents, and restricted cash (364) (1,093) 403
+Net increase (decrease) in cash, cash equivalents, and restricted cash (5,900) 17,776 19,637
+CASH, CASH EQUIVALENTS, AND RESTRICTED CASH, END OF PERIOD $ 36,477 $ 54,253 $ 73,890
+See accompanying notes to consolidated financial statements.",37,Amazon_FY2023_10K
+Amazon,Logical Reasoning,"Are Amazon's gross margins historically consistent (not fluctuating more than roughly 2% each year)? If gross margins are not a relevant metric for a company like this, then please state that and explain why.","Yes, they are fairly consistent with an upward trend, indicating moderate growth year over year. Their gross margins for 2021, 2022, and 2023 respectively were 42.03%, 43.81%, and 46.98%. Although in 2023 there was about a 3% increase from the prior year, I still believe that it is in line with being consistent in performing better than the last year as well as the fact that 2023 was the first full year for most countries where covid restrictions were finally relaxed. With respect to how relevant the gross margin metric is to Amazon, the company states themselves that they believe operating margin is a more meaningful measure than gross profit and gross margin due to the diversity of our product categories and services.","The gross margin (GM) formula is (revenue - cost of sales) / revenue. Using this formula, the following GM's were computed for 2021, 2022, and 2023:
+FY2021 GM = (469,822 - 272,344) / 469,822 = 42.03%
+FY2022 GM = (513,983 - 288,831) / 513,983 = 43.81%
+FY2023 GM = (574,785 - 304,739) / 574,785 = 46.98%
+These numbers were pulled from the consolidated statement of operations.
+
+""We believe that operating income is a more meaningful measure than gross profit and gross margin due to the diversity of our product categories and services."" (page 25)","Table of Contents
+
+AMAZON.COM, INC.
+
+CONSOLIDATED STATEMENTS OF OPERATIONS
+(in millions, except per share data)
+
+Year Ended December 31,
+2021 2022 2023
+Net product sales $ 241,787 $ 242,901 $ 255,887
+Net service sales 228,035 271,082 318,898
+Total net sales 469,822 513,983 574,785
+Operating expenses:
+Cost of sales 272,344 288,831 304,739
+Fulfillment 75,111 84,299 90,619
+Technology and infrastructure 56,052 73,213 85,622
+Sales and marketing 32,551 42,238 44,370
+General and administrative 8,823 11,891 11,816
+Other operating expense (income), net 62 1,263 767
+Total operating expenses 444,943 501,735 537,933
+Operating income 24,879 12,248 36,852
+Interest income 448 989 2,949
+Interest expense (1,809) (2,367) (3,182)
+Other income (expense), net 14,633 (16,806) 938
+Total non-operating income (expense) 13,272 (18,184) 705
+Income (loss) before income taxes 38,151 (5,936) 37,557
+Benefit (provision) for income taxes (4,791) 3,217 (7,120)
+Equity-method investment activity, net of tax 4 (3) (12)
+Net income (loss) $ 33,364 $ (2,722) $ 30,425
+Basic earnings per share $ 3.30 $ (0.27) $ 2.95
+Diluted earnings per share $ 3.24 $ (0.27) $ 2.90
+Weighted-average shares used in computation of earnings per share:
+Basic 10,117 10,189 10,304
+Diluted 10,296 10,189 10,492
+
+See accompanying notes to consolidated financial statements.","25, 38",Amazon_FY2023_10K
+Nvidia,Information Extraction,What is the FY2022 COGS for Nvidia? Please state answer in USD millions. Provide a response to the question by primarily using the statement of income.,"11,618 
+Note: Nvidia's business year-end is not Dec 31 but rather Jan 28-29. As such, their COGS for Jan 31, 2023 was used as this majority of the year of 2022.",The metric was found within their consolidated statement of income under the line item: cost of revenue.,"Table of Contents
+
+NVIDIA Corporation and Subsidiaries
+Consolidated Statements of Income
+(In millions, except per share data)
+
+Year Ended
+
+Jan 28, 2024 Jan 29, 2023 Jan 30, 2022
+Revenue $ 60,922 $ 26,974 $ 26,914
+Cost of revenue 16,621 11,618 9,439
+Gross profit 44,301 15,356 17,475
+Operating expenses
+Research and development 8,675 7,339 5,268
+Sales, general and administrative 2,654 2,440 2,166
+Acquisition termination cost — 1,353 —
+Total operating expenses 11,329 11,132 7,434
+Operating income 32,972 4,224 10,041
+Interest income 866 267 29
+Interest expense (257) (262) (236)
+Other, net 237 (48) 107
+Other income (expense), net 846 (43) (100)
+Income before income tax 33,818 4,181 9,941
+Income tax expense (benefit) 4,058 (187) 189
+Net income $ 29,760 $ 4,368 $ 9,752
+Net income per share:
+Basic $ 12.05 $ 1.76 $ 3.91
+Diluted $ 11.93 $ 1.74 $ 3.85
+Weighted average shares used in per share computation:
+Basic 2,469 2,487 2,496
+Diluted 2,494 2,507 2,535
+
+See accompanying notes to the consolidated financial statements.",50,Nvidia_FY2023_10K
+Nvidia,Information Extraction,What are the geographies that Nvidia primarily operates in as of FY2023?,"United States, Taiwan, China, and others (such as Europe and Asia Pacific regions).",This was extrapolated from their 10K based on how they split up their revenue per geographic region. Further Google research indicated that they also operate in Europe and Asia Pacific regions.,"Revenue by geographic areas is designated based upon the billing location of the customer. End customer location may be different than our customer’s billing
+location. Revenue by geographic areas was as follows:
+
+Year Ended
+
+Jan 28, 2024 Jan 29, 2023 Jan 30, 2022
+
+Revenue: (In millions)
+United States $ 26,966 $ 8,292 $ 4,349
+Taiwan 13,405 6,986 8,544
+China (including Hong Kong) 10,306 5,785 7,111
+Other countries 10,245 5,911 6,910
+Total revenue $ 60,922 $ 26,974 $ 26,914
+Revenue from sales to customers outside of the United States accounted for 56%, 69%, and 84% of total revenue for fiscal years 2024, 2023, and 2022,
+respectively. The increase in revenue to the United States for fiscal year 2024 was primarily due to higher U.S.-based Compute & Networking segment demand.",79,Nvidia_FY2023_10K
+Nvidia,Numerical Reasoning,Has Nvidia increased its debt on balance sheet between FY2023 and the FY2022 period?,"Short-term debt stayed consistent at 1,250. Long-term debt decreased from 9,703 in 2022 to 8,459 in 2023. This indicates that they likely made debt payments within the year and did not take on additional large amounts of debt. ","This was extracted from their consolidated balance sheets. Specifically, the short-term debt and long-term debt line items were examined.","Table of Contents
+
+NVIDIA Corporation and Subsidiaries
+Consolidated Balance Sheets
+(In millions, except par value)
+
+Jan 28, 2024 Jan 29, 2023
+
+Assets
+Current assets:
+Cash and cash equivalents $ 7,280 $ 3,389
+Marketable securities 18,704 9,907
+Accounts receivable, net 9,999 3,827
+Inventories 5,282 5,159
+Prepaid expenses and other current assets 3,080 791
+Total current assets 44,345 23,073
+Property and equipment, net 3,914 3,807
+Operating lease assets 1,346 1,038
+Goodwill 4,430 4,372
+Intangible assets, net 1,112 1,676
+Deferred income tax assets 6,081 3,396
+Other assets 4,500 3,820
+Total assets $ 65,728 $ 41,182
+Liabilities and Shareholders' Equity
+Current liabilities:
+Accounts payable $ 2,699 $ 1,193
+Accrued and other current liabilities 6,682 4,120
+Short-term debt 1,250 1,250
+Total current liabilities 10,631 6,563
+Long-term debt 8,459 9,703
+Long-term operating lease liabilities 1,119 902
+Other long-term liabilities 2,541 1,913
+Total liabilities 22,750 19,081
+Commitments and contingencies - see Note 13
+Shareholders’ equity:
+Preferred stock, $0.001 par value; 2 shares authorized; none issued — —
+Common stock, $0.001 par value; 8,000 shares authorized; 2,464 shares issued and outstanding as of
+January 28, 2024; 2,466 shares issued and outstanding as of January 29, 2023 2 2
+Additional paid-in capital 13,132 11,971
+Accumulated other comprehensive income (loss) 27 (43)
+Retained earnings 29,817 10,171
+Total shareholders' equity 42,978 22,101
+Total liabilities and shareholders' equity $ 65,728 $ 41,182
+
+See accompanying notes to the consolidated financial statements.",52,Nvidia_FY2023_10K
+Nvidia,Logical Reasoning,"Does Nvidia have a reasonably healthy liquidity profile based on its quick ratio for Q2 of FY2023? If the quick ratio is not relevant to measure liquidity, please state that and explain why.",Quarterly breakdowns of the financial statements were not found within the 10K. ,Quarterly breakdowns of the financial statements were not found within the 10K. ,No evidence text in this case,,Nvidia_FY2023_10K
+Google,Information Extraction,Has Google reported any materially important ongoing legal battles from FY2022 and FY2021?,"Yes, in 2022 and 2021 they call out their antitrust investigations, patent & intellectual property claims, as well as other lawsuits the company is facing.","This information was extracted from the company's notes to the consolidated financial statements, within note 10 specifically. ","Note 10. Contingencies
+Indemnifications
+In the normal course of business, including to facilitate transactions in our services and products and corporate
+activities, we indemnify certain parties, including advertisers, Google Network partners, customers of Google Cloud
+offerings, lessors and service providers with respect to certain matters. We have agreed to hold certain parties
+harmless against losses arising from a breach of representations or covenants, or out of intellectual property
+infringement or other claims made against certain parties. Several of these agreements limit the time within which an
+indemnification claim can be made and the amount of the claim. In addition, we have entered into indemnification
+agreements with our officers and directors, and our bylaws contain similar indemnification obligations to our agents.
+It is not possible to make a reasonable estimate of the maximum potential amount under these indemnification
+agreements due to the unique facts and circumstances involved in each particular agreement. Additionally, we have a
+limited history of prior indemnification claims, and the payments we have made under such agreements have not had a
+material adverse effect on our results of operations, cash flows, or financial position. However, to the extent that valid
+indemnification claims arise in the future, future payments by us could be significant and could have a material adverse
+effect on our results of operations or cash flows in a particular period.
+As of December 31, 2021, we did not have any material indemnification claims that were probable or reasonably
+possible.
+Legal Matters
+Antitrust Investigations
+On November 30, 2010, the EC's Directorate General for Competition opened an investigation into various
+antitrust-related complaints against us.
+On June 27, 2017, the EC announced its decision that certain actions taken by Google regarding its display and
+ranking of shopping search results and ads infringed European competition law. The EC decision imposed a €2.4 billion
+($2.7 billion as of June 27, 2017) fine. On September 11, 2017, we appealed the EC decision to the General Court, and
+on September 27, 2017, we implemented product changes to bring shopping ads into compliance with the EC's
+decision. We recognized a charge of $2.7 billion for the fine in the second quarter of 2017. On November 10, 2021, the
+General Court rejected our appeal, and we subsequently filed an appeal with the European Court of Justice on January
+20, 2022.
+On July 18, 2018, the EC announced its decision that certain provisions in Google’s Android-related distribution
+agreements infringed European competition law. The EC decision imposed a €4.3 billion ($5.1 billion as of June 30,
+2018) fine and directed the termination of the conduct at issue. On October 9, 2018, we appealed the EC decision. On
+October 29, 2018, we implemented changes to certain of our Android distribution practices. We recognized a charge of
+$5.1 billion for the fine in the second quarter of 2018.
+On March 20, 2019, the EC announced its decision that certain contractual provisions in agreements that Google
+had with AdSense for Search partners infringed European competition law. The EC decision imposed a fine of €1.5
+billion ($1.7 billion as of March 20, 2019) and directed actions related to AdSense for Search partners' agreements,
+which we implemented prior to the decision. On June 4, 2019, we appealed the EC decision. We recognized a charge
+of $1.7 billion for the fine in the first quarter of 2019.
+While each EC decision is under appeal, we included the fines in accrued expenses and other current liabilities on
+our Consolidated Balance Sheets as we provided bank guarantees (in lieu of a cash payment) for the fines.
+
+76
+
+Table of Contents Alphabet Inc.
+
+From time to time we are subject to formal and informal inquiries and investigations on competition matters by
+regulatory authorities in the U.S., Europe, and other jurisdictions. In August 2019, we began receiving civil investigative
+demands from the U.S. Department of Justice (DOJ) requesting information and documents relating to our prior
+antitrust investigations and certain aspects of our business. The DOJ and a number of state Attorneys General filed a
+lawsuit on October 20, 2020 alleging that Google violated U.S. antitrust laws relating to Search and Search advertising.
+Separately, on December 16, 2020, a number of state Attorneys General filed an antitrust complaint against Google in
+the U.S. District Court for the Eastern District of Texas, alleging that Google violated U.S. antitrust laws as well as state
+deceptive trade laws relating to its advertising technology. On June 22, 2021, the EC opened a formal investigation into
+Google's advertising technology business practices. On July 7, 2021, a number of state Attorneys General filed an
+antitrust complaint against us in the U.S. District Court for the Northern District of California, alleging that Google’s
+operation of Android and Google Play violated U.S. antitrust laws and state antitrust and consumer protection laws. We
+believe these complaints are without merit and will defend ourselves vigorously. The DOJ and state Attorneys General
+continue their investigations into certain aspects of our business. We continue to cooperate with federal and state
+regulators in the U.S., the EC and other regulators around the world.
+Patent and Intellectual Property Claims
+We have had patent, copyright, trade secret, and trademark infringement lawsuits filed against us claiming that
+certain of our products, services, and technologies infringe others' intellectual property rights. Adverse results in these
+lawsuits may include awards of substantial monetary damages, costly royalty or licensing agreements, or orders
+preventing us from offering certain features, functionalities, products, or services. As a result, we may have to change
+our business practices and develop non-infringing products or technologies, which could result in a loss of revenues for
+us and otherwise harm our business. In addition, the U.S. International Trade Commission (ITC) has increasingly
+become an important forum to litigate intellectual property disputes because an ultimate loss in an ITC action can result
+in a prohibition on importing infringing products into the U.S. Because the U.S. is an important market, a prohibition on
+importation could have an adverse effect on us, including preventing us from importing many important products into
+the U.S. or necessitating workarounds that may limit certain features of our products.
+Furthermore, many of our agreements with our customers and partners require us to indemnify them against
+certain intellectual property infringement claims, which would increase our costs as a result of defending such claims,
+and may require that we pay significant damages if there were an adverse ruling in any such claims. In addition, our
+customers and partners may discontinue the use of our products, services, and technologies, as a result of injunctions
+or otherwise, which could result in loss of revenues and adversely affect our business.
+In 2010, Oracle America, Inc. (Oracle) brought a copyright lawsuit against Google in the Northern District of
+California, alleging that Google's Android operating system infringes Oracle's copyrights related to certain Java
+application programming interfaces (Java APIs). After trial, final judgment was entered by the district court in favor of
+Google on June 8, 2016, and the court decided post-trial motions in favor of Google. Oracle appealed and on March
+27, 2018, the Federal Circuit Court of Appeals reversed and remanded the case for a trial on damages. On May 29,
+2018, we filed a petition for a rehearing at the Federal Circuit, and on August 28, 2018, the Federal Circuit denied the
+petition. On January 24, 2019, we filed a petition to the U.S. Supreme Court to review the case. On April 29, 2019, the
+Supreme Court requested the views of the Solicitor General regarding our petition. On September 27, 2019, the
+Solicitor General recommended denying our petition, and we provided our response on October 16, 2019. On
+November 15, 2019, the Supreme Court granted our petition and made a decision to review the case. The Supreme
+Court heard oral arguments in our case on October 7, 2020. On April 5, 2021, the Supreme Court reversed the Federal
+Circuit's ruling and found that Google’s use of the Java APIs was a fair use as a matter of law. The Supreme Court
+remanded the case to the Federal Circuit for further proceedings in conformity with the Supreme Court opinion. On May
+14, 2021, the Federal Circuit entered an order affirming the district court’s final judgment in favor of Google. On June
+21, 2021, the Federal Circuit issued a mandate returning the case to the district court, and the case is now concluded.
+Other
+We are also regularly subject to claims, suits, regulatory and government investigations, other proceedings, and
+consent decrees involving competition, intellectual property, privacy, tax and related compliance, labor and
+employment, commercial disputes, content generated by our users, goods and services offered by advertisers or
+publishers using our platforms, personal injury, consumer protection, and other matters. For example, we have a
+number of privacy investigations and suits ongoing in multiple jurisdictions. Such claims, suits, regulatory and
+government investigations, other proceedings, and consent decrees could result in substantial fines and penalties,
+injunctive relief, ongoing auditing and monitoring obligations, changes to our products and services, alterations to our
+business models and operations, and collateral related civil litigation or other adverse consequences, all of which could
+harm our business, reputation, financial condition, and operating results.
+
+77
+
+Table of Contents Alphabet Inc.
+
+Certain of these outstanding matters include speculative, substantial or indeterminate monetary amounts. We
+record a liability when we believe that it is probable that a loss has been incurred, and the amount can be reasonably
+estimated. If we determine that a loss is reasonably possible and the loss or range of loss can be estimated, we
+disclose the reasonably possible loss. We evaluate developments in our legal matters that could affect the amount of
+liability that has been previously accrued, and the matters and related reasonably possible losses disclosed, and make
+adjustments as appropriate. Significant judgment is required to determine both the likelihood of there being and the
+estimated amount of a loss related to such matters.
+With respect to our outstanding matters, based on our current knowledge, we believe that the amount or range of
+reasonably possible loss will not, either individually or in aggregate, have a material adverse effect on our business,
+consolidated financial position, results of operations, or cash flows. However, the outcome of such matters is inherently
+unpredictable and subject to significant uncertainties.
+We expense legal fees in the period in which they are incurred.","FY2021: pg 77-79
+FY 2022: pg 73-75","Google_FY2022_10K
+Google_FY2021_10K"
+Google,Information Extraction,What are major acquisitions that Google has done in FY2023 and FY2022?,Google acquired Mandiant for $6.1B in September 2022. No major acquisitions were made in 2023.,"This information was found within the company's 10K. In the FY2022 10K, they specifically highlighted the acquistiion of this company as well as had a dedicate note for it in the notes to the consolidated financial statements section, titled: Note 8: Acquisitions. Within 2023, there were no callouts to any notable acquisitions, their line-item for acquisitions in their cash flow statement drastically decreased, and there was no note dedicated to acquisitions in FY2023, indicating that no major acquisitions were conducted within the year.","Note 8. Acquisitions
+Mandiant Acquisition
+On September 12, 2022 we closed the acquisition of Mandiant for a total purchase price of $6.1 billion,
+including cash and debt. The purchase price excludes post acquisition compensation arrangements. Mandiant's
+dynamic cyber defense, threat intelligence and incident response services are expected to enhance Google Cloud's
+security offerings. The financial results of Mandiant have been included within the Google Cloud segment as of the
+close of the acquisition.
+The purchase price was allocated as follows (in millions):
+Intangible assets $ 840
+Goodwill 4,772
+Net assets acquired 489
+Total purchase price $ 6,101
+Goodwill was recorded in the Google Cloud segment and primarily attributable to synergies expected to arise after the
+acquisition. Goodwill is not deductible for tax purposes.
+Includes $706 million of acquired cash.
+Intangible assets acquired as of the acquisition date were as follows:
+
+Amount
+(in millions)
+
+Weighted-Average
+Useful Life
+(in years)
+Patents and developed technology $ 349 4.8
+Customer relationships 366 8.0
+Trade names and other 125 5.9
+Total intangible assets $ 840","FY2022: 27, 31, 72","Google_FY2022_10K
+Google_FY2023_10K"
+Google,Numerical Reasoning,What is the FY2022 unadjusted EBITDA % margin for Google? Calculate unadjusted EBITDA using unadjusted operating income and D&A (from cash flow statement). Give a response to the question by relying on the details shown in the statement of cash flows and the P&L statement.,32.09%,"The EBITDA % margin formula is (operating income + depreciation + amortization) / revenue. Using this formula, the following margin was computed for 2022:
+FY2022 = (74,842 + 15,287 + 641) / 282,836 = 32.09%
+These values were located within the consoldated statement of income and cash flows.","Table of Contents Alphabet Inc.
+
+Alphabet Inc.
+
+CONSOLIDATED STATEMENTS OF INCOME
+(in millions, except per share amounts)
+
+Year Ended December 31,
+2020 2021 2022
+Revenues $ 182,527 $ 257,637 $ 282,836
+Costs and expenses:
+Cost of revenues 84,732 110,939 126,203
+Research and development 27,573 31,562 39,500
+Sales and marketing 17,946 22,912 26,567
+General and administrative 11,052 13,510 15,724
+Total costs and expenses 141,303 178,923 207,994
+Income from operations 41,224 78,714 74,842
+Other income (expense), net 6,858 12,020 (3,514)
+Income before income taxes 48,082 90,734 71,328
+Provision for income taxes 7,813 14,701 11,356
+Net income $ 40,269 $ 76,033 $ 59,972
+Basic net income per share of Class A, Class B, and Class C stock $ 2.96 $ 5.69 $ 4.59
+Diluted net income per share of Class A, Class B, and Class C stock $ 2.93 $ 5.61 $ 4.56
+
+See accompanying notes.
+
+48
+
+Table of Contents Alphabet Inc.
+
+Alphabet Inc.
+
+CONSOLIDATED STATEMENTS OF CASH FLOWS
+
+(in millions)
+
+Year Ended December 31,
+2020 2021 2022
+
+Operating activities
+Net income $ 40,269 $ 76,033 $ 59,972
+Adjustments:
+Depreciation and impairment of property and equipment 12,905 11,555 15,287
+Amortization and impairment of intangible assets 792 886 641
+Stock-based compensation expense 12,991 15,376 19,362
+Deferred income taxes 1,390 1,808 (8,081)
+(Gain) loss on debt and equity securities, net (6,317) (12,270) 5,519
+Other 1,267 (213) 1,030
+Changes in assets and liabilities, net of effects of acquisitions:
+Accounts receivable, net (6,524) (9,095) (2,317)
+Income taxes, net 1,209 (625) 584
+Other assets (1,330) (1,846) (5,046)
+Accounts payable 694 283 707
+Accrued expenses and other liabilities 5,504 7,304 3,915
+Accrued revenue share 1,639 1,682 (445)
+Deferred revenue 635 774 367
+Net cash provided by operating activities 65,124 91,652 91,495
+Investing activities
+Purchases of property and equipment (22,281) (24,640) (31,485)
+Purchases of marketable securities (136,576) (135,196) (78,874)
+Maturities and sales of marketable securities 132,906 128,294 97,822
+Purchases of non-marketable securities (7,175) (2,838) (2,531)
+Maturities and sales of non-marketable securities 1,023 934 150
+Acquisitions, net of cash acquired, and purchases of intangible assets (738) (2,618) (6,969)
+Other investing activities 68 541 1,589
+Net cash used in investing activities (32,773) (35,523) (20,298)
+Financing activities
+Net payments related to stock-based award activities (5,720) (10,162) (9,300)
+Repurchases of stock (31,149) (50,274) (59,296)
+Proceeds from issuance of debt, net of costs 11,761 20,199 52,872
+Repayments of debt (2,100) (21,435) (54,068)
+Proceeds from sale of interest in consolidated entities, net 2,800 310 35
+Net cash used in financing activities (24,408) (61,362) (69,757)
+Effect of exchange rate changes on cash and cash equivalents 24 (287) (506)
+Net increase (decrease) in cash and cash equivalents 7,967 (5,520) 934
+Cash and cash equivalents at beginning of period 18,498 26,465 20,945
+Cash and cash equivalents at end of period $ 26,465 $ 20,945 $ 21,879
+Supplemental disclosures of cash flow information
+Cash paid for income taxes, net of refunds $ 4,990 $ 13,412 $ 18,892
+
+See accompanying notes.","48, 51",Google_FY2022_10K
+Google,Logical Reasoning,"What drove gross margin change as of FY2022 for Google? If gross margin is not a useful metric for a company like this, then please state that and explain why.","Within Google's disaggregated revenues, the division of Google Cloud's revenue increased the most due to their acquisition of Mandiant for this team specifically. This acquisition drove their revenues higher within the FY2022.","This information was extracted from the company's notes to the consolidated financial statements, within note 2 specifically. ","Table of Contents Alphabet Inc.
+
+Note 2. Revenues
+Disaggregated Revenues
+The following table presents revenues disaggregated by type (in millions):
+
+Year Ended December 31,
+2020 2021 2022
+Google Search & other $ 104,062 $ 148,951 $ 162,450
+YouTube ads 19,772 28,845 29,243
+Google Network 23,090 31,701 32,780
+Google advertising 146,924 209,497 224,473
+Google other 21,711 28,032 29,055
+Google Services total 168,635 237,529 253,528
+Google Cloud 13,059 19,206 26,280
+Other Bets 657 753 1,068
+Hedging gains (losses) 176 149 1,960
+Total revenues $ 182,527 $ 257,637 $ 282,836
+No individual customer or groups of affiliated customers represented more than 10% of our revenues in 2020,
+2021, or 2022.
+The following table presents revenues disaggregated by geography, based on the addresses of our customers (in
+millions):
+
+Year Ended December 31,
+
+2020 2021 2022
+United States $ 85,014 47 % $ 117,854 46 % $ 134,814 48 %
+EMEA 55,370 30 79,107 31 82,062 29
+APAC 32,550 18 46,123 18 47,024 16
+Other Americas 9,417 5 14,404 5 16,976 6
+Hedging gains (losses) 176 0 149 0 1,960 1
+Total revenues $ 182,527 100 % $ 257,637 100 % $ 282,836 100 %
+Regions represent Europe, the Middle East, and Africa (EMEA); Asia-Pacific (APAC); and Canada and Latin America (""Other
+Americas"").
+Revenue Backlog
+As of December 31, 2022, we had $64.3 billion of remaining performance obligations (“revenue backlog”),
+primarily related to Google Cloud. Our revenue backlog represents commitments in customer contracts for future
+services that have not yet been recognized as revenue. The amount and timing of revenue recognition for these
+commitments is largely driven by our ability to deliver in accordance with relevant contract terms and when our
+customers utilize services, which could affect our estimate of revenue backlog and when we expect to recognize such
+as revenue. We expect to recognize approximately half of the revenue backlog as revenues over the next 24 months
+with the remaining to be recognized thereafter. Revenue backlog includes related deferred revenue currently recorded
+as well as amounts that will be invoiced in future periods, and excludes contracts with an original expected term of one
+year or less and cancellable contracts.
+Deferred Revenue
+We record deferred revenues when cash payments are received or due in advance of our performance, including
+amounts which are refundable. Deferred revenues primarily relate to Google Cloud and Google other. Total deferred
+revenue as of December 31, 2021 was $3.8 billion, of which $2.5 billion was recognized as revenues for the year
+ending December 31, 2022.
+(1)
+(1)
+(1)
+
+(1)
+
+59",59,Google_FY2022_10K

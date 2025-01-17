@@ -1,0 +1,223 @@
+{ 
+    "company" : "AMAZON",
+    "question_type" : "Information Extraction",
+    "question" : "What is Amazon's year end FY2020 net AR (in USD millions)? Address the question by adopting the perspective of a financial analyst who can only use the details shown within the balance sheet.",
+    "answer" : "$24,542,000,000",
+    "justification" : "Amazon's net AR as of 12/31/2020 is $24,54,000,000. This amount was directly extracted from the 10-K, per the balance sheet line item \"Accounts receivable, net and other.\"",
+    "evidence" : [
+        {
+            "source" : "Amazon_FY2020_10K",
+            "page_number" : 41,
+            "full_page_text" : "",
+        }
+    ]
+}
+{
+    "company" : "AMAZON",
+    "question_type" : "Information Extraction",
+    "question" : "Has Amazon paid dividends to common shareholders in FY2020?",
+    "answer" : "No",
+    "justification" : "Dividends paid to common shareholders would be presented in the Financing Activities section Statement of Cash Flows, the Retained Earnings section of the Statement of Stockholders' Equity, and likely in the footnotes to the financial statements.\n\nAmazon did not pay dividends to common shareholders in 2020. No dividends were reported in the Financing Activities section of the Statement of Cash Flows. Further, no dividends were reported in the Statement of Stockholders' Equity, as dividends paid would have reduced retained earnings during the year. Further, no information regarding the dividends was provided in the Notes to the Financial Statements.",
+    "evidence" : [
+        {
+            "source" : "Amazon_FY2020_10K",
+            "page_number" : 38,
+            "full_page_text" : "",
+        },
+        {
+            "source" : "Amazon_FY2020_10K",
+            "page_number" : 42,
+            "full_page_text" : "",
+        }
+    ]
+}
+{
+    "company" : "AMAZON",
+    "question_type" : "Numerical Reasoning",
+    "question" : "Among operations, investing, and financing activities, which brought in the most (or lost the least) cash flow for Amazon in FY2023?",
+    "answer" : "Operating Activities with $89,946 (in USD millions)",
+    "justification" : "For 2023, operating activities provided cash inflows of $84,946,000,000. Investing activities used cash outflows of $49,833,000,000. Financing activities used cash outflows of $15,879,000,000. Therefore, for the year ended 12/31/2023, operating activities brought in the most cash flow for Amazon, with operating cash flows of $84,946,000,000.",
+    "evidence" : [
+        {
+            "source" : "Amazon_FY2023_10K",
+            "page_number" : 37,
+            "full_page_text" : "",
+        }
+    ]
+}
+{
+    "company" : "AMAZON",
+    "question_type" : "Logical Reasoning",
+    "question" : "Are Amazon's gross margins historically consistent (not fluctuating more than roughly 2% each year)? If gross margins are not a relevant metric for a company like this, then please state that and explain why.",
+    "answer" : "Amazon's gross margins are neither consistent nor relevant to the company's metric analysis. Amazon uses operating income rather than gross margin, given the diversity of the company's many revenue streams.",
+    "justification" : "Please see my gross margin analysis below:\n\n2021: ($469,822 [Net Sales] - 272,344 [Cost of Sales]) / 272,344 [Cost of Sales] = 88.62% gross margin\n2022: ($513,983 [Net Sales] - 288,831 [Cost of Sales]) / 288,831 [Cost of Sales] = 44.87% gross margin\n2023: ($574,785 [Net Sales] - 304,739 [Cost of Sales]) / 304,739 [Cost of Sales] = 72.51% gross margin\n\nYoY % Change in Gross Margin:\n2022: 44.87 - 88.62 / 88.62= 49.3%\n2023: 72.51 - 44.87 / 44.87= 61.6%\n\nAs shown above, the company\'s gross margins are not consistent. This is likely due to the various revenue streams involved with the company\'s business. Further, differences in cost of sales likely vary among the company\'s diverse products and services. For example, Amazon offers online products and services, such as Prime video and Kindle, which do not involve shipping costs, purchase price, and delivery. For gross margin to be a meaningful metric, we would likely need to perform an analysis by segment.",
+    "evidence" : [
+        {
+            "source" : "Amazon_FY2023_10K",
+            "page_number" : 25,
+            "full_page_text" : "",
+        },
+        {
+            "source" : "Amazon_FY2022_10K",
+            "page_number" : 38,
+            "full_page_text" : "",
+        },
+    ]
+}
+{
+    "company" : "NVIDIA",
+    "question_type" : "Information Extraction",
+    "question" : "What is the FY2022 COGS for Nvidia? Please state answer in USD millions. Provide a response to the question by primarily using the statement of income.",
+    "answer" : "$9,439,000,000",
+    "justification" : "Per the Consolidated Statement of Income for the year ended January 30, 2022, cost of revenue is $9,439 million.",
+    "evidence" : [
+        {
+            "source" : "Nvidia_FY2022_10K",
+            "page_number" : 54,
+            "full_page_text" : "",
+        }
+    ]
+}
+{
+    "company" : "NVIDIA",
+    "question_type" : "Information Extraction",
+    "question" : "What are the geographies that Nvidia primarily operates in as of FY2023?",
+    "answer" : "Nvidia operates internationally; however, the geographic areas with the highest revenue for the year ended January 28, 2024 were United States, Taiwan, and China (including Hong Kong).",
+    "justification" : "Per Note 17 - Segment Information, revenue by geographic areas included the United States, Taiwan, China (including Hong Kong) and other countries. Revenue from sales to customers outside of the United States was 56% for the year ended January 28, 2024.",
+    "evidence" : [
+        {
+            "source" : "Nvidia_FY2023_10K",
+            "page_number" : 79,
+            "full_page_text" : "",
+        }
+    ]
+}
+{
+    "company" : "NVIDIA",
+    "question_type" : "Numerical Reasoning",
+    "question" : "Has Nvidia increased its debt on balance sheet between FY2023 and the FY2022 period?",
+    "answer" : "Yes, the company's liabilities increased by $3,669,000,000 between FY2023 and FY2022.",
+    "justification" : "Per the balance sheet, total liabilities for the year ended 1/29/2023 were $19,081,000,000. Total liabilities for the year ended 1/28/2024 were $22,750,000,000. This is a $3,669,000,000 increase in debt.",
+    "evidence" : [
+        {
+            "source" : "Nvidia_FY2023_10K",
+            "page_number" : 52,
+            "full_page_text" : "",
+        }
+    ]     
+}
+{
+    "company" : "NVIDIA",
+    "question_type" : "Logical Reasoning",
+    "question" : "Does Nvidia have a reasonably healthy liquidity profile based on its quick ratio for Q2 of FY2023? If the quick ratio is not relevant to measure liquidity, please state that and explain why.",
+    "answer" : "The quick ratio is a liquidity metric that measures the liquid assets available to cover its current debts. The 10-K only presents financial information on an annual basis. To obtain the quick ratio for Q2 of FY2023, I would need to see the 10-Q for that period. However, the quick ratio for Q4 of FY2023 is 3.38%. This is considered a reasonably healthy quick ratio, as the company has enough liquid assets to cover its short-term debt.",
+    "justification" : "The quick ratio is calculated as: (Total current assets - Inventories - Prepaid expenses)/Total current liabilities. Therefore: (44,345 - 5,282 - 3080) / 10,631 = 3.385%.",
+    "evidence" : [
+        {
+            "source" : "Nvidia_FY2023_10K",
+            "page_number" : 42,
+            "full_page_text" : "",
+        },
+        {
+            "source" : "Nvidia_FY2023_10K",
+            "page_number" : 52,
+            "full_page_text" : "",
+        }
+    ]   
+}
+{
+    "company" : "GOOGLE",
+    "question_type" : "Information Extraction",
+    "question" : "Has Google reported any materially important ongoing legal battles from FY2022 and FY2021?",
+    "answer" : "Yes. The company disclosed several legal matters in 2021 and 2022– such as antitrust investigations, patent and IP claims, legal matters relating to Russia, and more– in Note 10. These legal matters are reasonably possible, meaning the likelihood of an adverse outcome is more than remote but less than probable.",
+    "justification" : "If a legal liability is probable and can be reasonably estimated, the company must recognize an accrued liability on its balance sheet and in the footnotes to the company's financial statements. Legal liabilities that are reasonably possible must be disclosed in a company's financial statements as a footnote. For legal liabilities with a remote possibility of occuring, no action is required. Such contingencies were disclosed in Note 10.",
+    "evidence" : [
+        {
+            "source" : "Google_FY2022_10K",
+            "page_number" : 74,
+            "full_page_text" : "",
+        },
+        {
+            "source" : "Google_FY2022_10K",
+            "page_number" : 75,
+            "full_page_text" : "",
+        },
+        {
+            "source" : "Google_FY2021_10K",
+            "page_number" : 42,
+            "full_page_text" : "",
+        },
+        {
+            "source" : "Google_FY2021_10K",
+            "page_number" : 78,
+            "full_page_text" : "",
+        },
+        {
+            "source" : "Google_FY2021_10K",
+            "page_number" : 79,
+            "full_page_text" : "",
+        }
+    ]   
+}
+{
+    "company" : "GOOGLE",
+    "question_type" : "Information Extraction",
+    "question" : "What are major acquisitions that Google has done in FY2023 and FY2022?",
+    "answer" : "Mandiant",
+    "justification" : "In FY2022, Google acquired Mandiant for $6.1 billion. In FY2023, Google acquired intangible assets related to Google Services and Google Cloud, but there were no major business combinations.",
+    "evidence" : [
+        {
+            "source" : "Google_FY2023_10K",
+            "page_number" : 77,
+            "full_page_text" : "",
+        },
+        {
+            "source" : "Google_FY2022_10K",
+            "page_number" : 32,
+            "full_page_text" : "",
+        },
+        {
+            "source" : "Google_FY2021_10K",
+            "page_number" : 73,
+            "full_page_text" : "",
+        },
+    ] 
+}
+{
+    "company" : "GOOGLE",
+    "question_type" : "Numerical Reasoning",
+    "question" : "What is the FY2022 unadjusted EBITDA % margin for Google? Calculate unadjusted EBITDA using unadjusted operating income and D&A (from cash flow statement). Give a response to the question by relying on the details shown in the statement of cash flows and the P&L statement.",
+    "answer" : "32.1%",
+    "justification" : "EBIT = $74,842,000,000\nDepreciation = $15,287,000,000\nAmortization expense = $641,000,000\n\nEBITDA = $90,770,000,000\nTotal revenue = $282,836,000,000\n\nUnadjusted EBITDA % margin = 32.1%",
+    "evidence" : [
+        {
+            "source" : "Google_FY2022_10K",
+            "page_number" : 48,
+            "full_page_text" : "",
+        },
+        {
+            "source" : "Google_FY2022_10K",
+            "page_number" : 51,
+            "full_page_text" : "",
+        }
+    ]
+}
+{
+    "company" : "GOOGLE",
+    "question_type" : "Logical Reasoning",
+    "question" : "What drove gross margin change as of FY2022 for Google? If gross margin is not a useful metric for a company like this, then please state that and explain why.",
+    "answer" : "An overall increase in revenue of 10% and an increase in cost of revenues of 14% contributed to an increase in gross margin of approximately 7%.",
+    "justification" : "There was both an increase in revenue and an increase in cost of revenues between 2022 and 2021. Consolidated revenues increased 10% during 2022. Each of the company\'s main revenue types– including Google Services, Google Cloud, other bets, and hedging gains– increased during 2022. Specifically, Google Cloud revenues increased from $19,206 in 2021 to $26,280 in 2022, an increase of 36.8%, and Google Services revenues increased from $237,529 to $253,528, an increase of 7%.\n\n2022:\nRevenue= 282,836\nCOGS=  126,203\nGross margin= 156,633\n\n2021:\nRevenue= 257,637\nCOGS= 110,939\nGross margin= 146,698\n\n% change YoY= 6.77%",
+    "evidence" : [
+        {
+            "source" : "Google_FY2022_10K",
+            "page_number" : 30,
+            "full_page_text" : "",
+        },
+        {
+            "source" : "Google_FY2022_10K",
+            "page_number" : 32,
+            "full_page_text" : "",
+        }
+    ]       
+}
