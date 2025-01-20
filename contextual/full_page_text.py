@@ -10,7 +10,7 @@ def extract_page_text(pdf_path, page_number):
             # since the page in footer is 1 less than actual page
             actual_page = page_number  # The page number already accounts for the offset
             if actual_page <= len(pdf_reader.pages):
-                page = pdf_reader.pages[actual_page - 1]
+                page = pdf_reader.pages[actual_page]
                 return page.extract_text()
             else:
                 return ""
