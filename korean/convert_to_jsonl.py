@@ -10,7 +10,7 @@ def csv_to_jsonl(input_csv, output_jsonl):
                 # Create evidence objects
                 evidence_pages = [
                     {
-                        "source": "/files/SAMSUNG_2023_4Q_Interim_Business_Report_vF_kr.pdf",
+                        "source": "/korean_docs/"+row['Evidence Document Name'].strip()+".pdf",
                         "page_number": int(page.strip()),
                         "full_page_text": ""
                     }
@@ -22,9 +22,13 @@ def csv_to_jsonl(input_csv, output_jsonl):
                 entry = {
                     "company": row['Company Name'].strip().upper(),
                     "question_type": row['Question Type'].strip(),
-                    "question_kr": row['Question Korean Translated'].strip(),
+                    "question_type_kr": row['Question Type (Korean)'].strip(),
                     "question_en": row['Question'].strip(),
-                    "answer_kr": row['Answer in Korean'].strip(),
+                    "question_kr": row['Question (Korean)'].strip(),
+                    "answer_en": row['Answer'].strip(),
+                    "answer_kr": row['Answer (Korean)'].strip(),
+                    "justification_en": row['Justification'].strip(),
+                    "justification_kr": row['Justification (Korean)'].strip(),
                     "evidence": evidence_pages
                 }
                 
@@ -32,6 +36,6 @@ def csv_to_jsonl(input_csv, output_jsonl):
                 jsonl_file.write(json.dumps(entry, ensure_ascii=False) + '\n')
 
 if __name__ == "__main__":
-    input_file = "KR_SAMSUNG_QA.csv"
-    output_file = "KR_SAMSUNG_QA.jsonl"
+    input_file = "KR_TRANSLATED_QA.csv"
+    output_file = "KR_TRANSLATED_QA.json"
     csv_to_jsonl(input_file, output_file)
