@@ -20,7 +20,7 @@ def extract_page_text(pdf_path, page_number):
 
 def process_json():
     # Read the input JSON
-    with open('OLD_KR_TRANSLATED_QA.json', 'r', encoding='utf-8') as file:
+    with open('OLD_SAMSUNG_QA_KR.json', 'r', encoding='utf-8') as file:
         data = json.load(file)
 
     # Process each question
@@ -28,7 +28,7 @@ def process_json():
         if 'evidence' in question:
             for evidence in question['evidence']:
                 if 'source' in evidence and 'page_number' in evidence:
-                    pdf_path = os.path.join('korean_docs', f"{evidence['source'].replace('/korean_docs/', '')}")
+                    pdf_path = os.path.join('files', f"{evidence['source'].replace('/files/', '')}")
                     if os.path.exists(pdf_path):
                         page_text = extract_page_text(pdf_path, evidence['page_number'])
                         evidence['full_page_text'] = page_text
@@ -36,7 +36,7 @@ def process_json():
                         print(f"PDF file not found: {pdf_path}")
 
     # Write the updated JSON with proper Korean encoding
-    with open('NEW_KR_TRANSLATED_QA.json', 'w', encoding='utf-8') as file:
+    with open('NEW_SAMSUNG_QA_KR.json', 'w', encoding='utf-8') as file:
         json.dump(data, file, indent=2, ensure_ascii=False)
 
 if __name__ == "__main__":
